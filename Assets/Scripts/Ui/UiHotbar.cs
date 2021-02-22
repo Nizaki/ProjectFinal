@@ -13,6 +13,7 @@ public class UiHotbar : MonoBehaviour
     {
         inventory = GameObject.FindGameObjectWithTag("Player").GetComponent<PlayerInventory>();
         inventory.onInvUpdate.AddListener(updateSlot);
+        updateSlot();
     }
 
     private void updateSlot()

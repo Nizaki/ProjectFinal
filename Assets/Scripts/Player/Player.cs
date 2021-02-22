@@ -18,6 +18,8 @@ public class Player : MonoBehaviour
     public UnityEvent onDeath;
     float darkDelay = 0;
     public List<GameObject> Interactable = new List<GameObject>();
+    public bool UnderLight;
+    float timer;
     // Start is called before the first frame update
     void Start()
     {
@@ -36,14 +38,29 @@ public class Player : MonoBehaviour
 
         if (GameTime.state == TimeState.NiGHT)
         {
+            if (UnderLight)
+            {
+                darkDelay = 0;
+                return;
+            }
             darkDelay += Time.deltaTime;
             if (darkDelay > maxDarkDelay)
             {
                 Debug.Log("Death");
-                alive = false;
-                onDeath.Invoke();
+                timer += 1 * Time.deltaTime;
+                if (timer > 1f)
+                {
+                    Hp -= 5;
+                    timer = 0;
+                }
             }
 
+        }
+
+        if (Hp <= 0)
+        {
+            alive = false;
+            onDeath.Invoke();
         }
     }
     private void FixedUpdate()

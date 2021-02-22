@@ -7,9 +7,10 @@ public class PlayerInventory : MonoBehaviour
 {
     public List<ItemStack> itemList = new List<ItemStack>(8);
     public int SelectedSlot = 0; //select item rage 0 - 9
-
+    public ItemObject currentItem;
     public UnityEvent<int> onSelectSlot;
     public UnityEvent onInvUpdate;
+    public SpriteRenderer handRender;
     Player player;
     private void Start()
     {
@@ -19,24 +20,25 @@ public class PlayerInventory : MonoBehaviour
             onInvUpdate = new UnityEvent();
         player = GetComponent<Player>();
     }
-    public void AddItem(ItemStack item)
+    public bool AddItem(ItemStack item)
     {
         for (int i = 0; i < itemList.Count; i++)
         {
             if (itemList[i].Item == null)
             {
-                itemList[i] = item;
+                itemList[i].Item = item.Item;
+                itemList[i].count = item.count;
                 onInvUpdate.Invoke();
-                return;
+                return true;
             }
             else if (itemList[i].name == item.name)
             {
                 itemList[i].count += 1;
                 onInvUpdate.Invoke();
-                return;
+                return true;
             }
         }
-        throw new System.Exception("There was no inv left ? maybe");
+        return false;
     }
 
     public void SelectSlot(int slot)
@@ -52,7 +54,7 @@ public class PlayerInventory : MonoBehaviour
             case ItemType.Food:
                 player.Eat(Mathf.FloorToInt(itemList[slot].data));
                 Debug.Log("Eat " + itemList[slot].name);
-                RemoveItem(slot);
+                CleanItemAt(slot);
                 break;
             case ItemType.Water:
                 player.Drink(Mathf.FloorToInt(itemList[slot].data));
@@ -63,10 +65,12 @@ public class PlayerInventory : MonoBehaviour
                 Debug.Log("Use " + itemList[slot].name);
                 break;
             case ItemType.Equip:
-            case ItemType.Build:
                 SelectedSlot = slot;
+                handRender.sprite = itemList[SelectedSlot].Item.sprite;
+                currentItem = itemList[SelectedSlot].Item;
                 onSelectSlot.Invoke(slot);
                 break;
+            case ItemType.Build:
             case ItemType.None:
                 break;
             default:
@@ -79,7 +83,41 @@ public class PlayerInventory : MonoBehaviour
 
     }
 
-    public void RemoveItem(int slot)
+    public bool RemoveItem(ItemStack itemStack)
+    {
+        return RemoveItem(itemStack.Item, itemStack.count);
+    }
+
+    public bool RemoveItem(ItemObject item, int count)
+    {
+        foreach (var (stack, index) in itemList.WithIndex())
+        {
+            if (stack.Item == item) // item founded
+            {
+                if (stack.count >= count) // check item stock
+                {
+                    stack.count -= count;
+                    Debug.Log($"Inventory : Remove {item.name} {count} ea");
+                    if (stack.count <= 0)
+                    {
+                        itemList[index] = new ItemStack();
+                        onInvUpdate.Invoke();
+                        return true;
+                    }
+                    return true;
+                }
+                else
+                {
+                    Debug.Log($"Inventory : {item.name} not enough");
+                    return false;
+                }
+            }
+        }
+        Debug.Log($"Inventory : {item.name} not founded");
+        return false;
+    }
+
+    public void CleanItemAt(int slot)
     {
         ItemStack empty = new ItemStack();
         itemList[slot] = empty;

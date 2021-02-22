@@ -1,8 +1,8 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
-
-public class CampFire : MonoBehaviour
+using UnityEngine.EventSystems;
+public class CampFire : MonoBehaviour, IPointerClickHandler
 {
     public CircleCollider2D coli;
     public GameObject light2D;
@@ -41,5 +41,25 @@ public class CampFire : MonoBehaviour
     private void OnTriggerEnter2D(Collider2D collision)
     {
         //TODO:Make player Immune to darkness
+        if (collision.CompareTag("Player"))
+        {
+            collision.GetComponent<Player>().UnderLight = true;
+        }
+    }
+
+    private void OnTriggerExit2D(Collider2D collision)
+    {
+        if (collision.CompareTag("Player"))
+        {
+            collision.GetComponent<Player>().UnderLight = false;
+        }
+    }
+
+    public void OnPointerClick(PointerEventData eventData)
+    {
+        if (eventData.button == PointerEventData.InputButton.Right)
+        {
+            CampfirePanel.ShowPanel(this);
+        }
     }
 }

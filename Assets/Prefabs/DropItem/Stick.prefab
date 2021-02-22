@@ -113,8 +113,5 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   Item:
-    name: Stick
-    sprite: {fileID: 21300000, guid: 076fb4f02a4cee74782f876783df5505, type: 3}
-    type: 0
-    data: 5
+    Item: {fileID: 11400000, guid: f8014fa55f6c05c448a6ee84e0f0fd95, type: 2}
     count: 1

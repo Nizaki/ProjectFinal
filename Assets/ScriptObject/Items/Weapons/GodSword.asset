@@ -1,0 +1,19 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: e706ca42014e7e94a8a9158c8ddb5a36, type: 3}
+  m_Name: GodSword
+  m_EditorClassIdentifier: 
+  itemName: God of SWORD
+  sprite: {fileID: 21300000, guid: f11f461c88593724ab243fc99e492f00, type: 3}
+  type: 4
+  data: 9999
+  description: "\u0E2A\u0E38\u0E14\u0E22\u0E2D\u0E14\u0E14\u0E32\u0E1A\u0E17\u0E35\u0E48\u0E21\u0E35\u0E2A\u0E38\u0E14\u0E22\u0E2D\u0E14\u0E14\u0E32\u0E40\u0E21\u0E08"

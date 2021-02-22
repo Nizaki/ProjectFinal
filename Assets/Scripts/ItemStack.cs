@@ -26,6 +26,12 @@ public class ItemStack
     {
         get { return Item.data; }
     }
-    public int count;
+    public int count = 0;
+
+    public void clear()
+    {
+        Item = null;
+        count = 0;
+    }
 }
 
