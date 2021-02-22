@@ -124,7 +124,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   prefab: {fileID: 9055635565714402621, guid: f698dffa949a38d4dbca99478d66d935, type: 3}
-  count: 1
+  count: 5
   requireTool: {fileID: 11400000, guid: 202e543f08aab06479e49f79a0b22181, type: 2}
   dropOffset: 0.2
   interactRange: 3

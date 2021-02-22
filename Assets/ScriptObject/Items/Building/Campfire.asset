@@ -19,3 +19,4 @@ MonoBehaviour:
   fuelable: 0
   fuelAmount: 10
   description: 
+  prefab: {fileID: 4869157802962464677, guid: 594df5d046d90b74e86a60183d264516, type: 3}

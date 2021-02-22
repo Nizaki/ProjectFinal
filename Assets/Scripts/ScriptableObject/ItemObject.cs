@@ -14,6 +14,7 @@ public class ItemObject : ScriptableObject
     public int fuelAmount = 10;
     [Multiline]
     public string description;
+    public GameObject prefab;
 }
 
 

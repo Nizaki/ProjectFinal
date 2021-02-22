@@ -54,15 +54,17 @@ public class PlayerInventory : MonoBehaviour
             case ItemType.Food:
                 player.Eat(Mathf.FloorToInt(itemList[slot].data));
                 Debug.Log("Eat " + itemList[slot].name);
-                CleanItemAt(slot);
+                RemoveItem(itemList[slot].Item, 1);
                 break;
             case ItemType.Water:
                 player.Drink(Mathf.FloorToInt(itemList[slot].data));
                 Debug.Log("Drink " + itemList[slot].name);
+                RemoveItem(itemList[slot].Item, 1);
                 break;
             case ItemType.Health:
                 player.Heal(Mathf.FloorToInt(itemList[slot].data));
                 Debug.Log("Use " + itemList[slot].name);
+                RemoveItem(itemList[slot].Item, 1);
                 break;
             case ItemType.Equip:
                 SelectedSlot = slot;
@@ -71,11 +73,33 @@ public class PlayerInventory : MonoBehaviour
                 onSelectSlot.Invoke(slot);
                 break;
             case ItemType.Build:
+                SelectedSlot = slot;
+                handRender.sprite = null;
+                currentItem = itemList[SelectedSlot].Item;
+                onSelectSlot.Invoke(slot);
+                break;
             case ItemType.None:
                 break;
             default:
                 break;
         }
+    }
+
+    private void Update()
+    {
+        if (currentItem != null)
+            if (currentItem.type == ItemType.Build)
+                if (Input.GetMouseButtonDown(0))
+                {
+
+                    Vector3 worldPos = Camera.main.ScreenToWorldPoint(Input.mousePosition);
+                    worldPos.z = 0;
+                    if (currentItem.prefab != null)
+                    {
+                        Instantiate(currentItem.prefab, worldPos, Quaternion.identity);
+                        RemoveItem(currentItem, 1);
+                    }
+                }
     }
 
     public void Use()

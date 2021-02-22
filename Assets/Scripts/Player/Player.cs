@@ -56,6 +56,10 @@ public class Player : MonoBehaviour
             }
 
         }
+        else
+        {
+            darkDelay = 0;
+        }
 
         if (Hp <= 0)
         {
