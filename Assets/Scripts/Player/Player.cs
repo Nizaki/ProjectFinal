@@ -46,7 +46,6 @@ public class Player : MonoBehaviour
             darkDelay += Time.deltaTime;
             if (darkDelay > maxDarkDelay)
             {
-                Debug.Log("Death");
                 timer += 1 * Time.deltaTime;
                 if (timer > 1f)
                 {
@@ -63,6 +62,7 @@ public class Player : MonoBehaviour
 
         if (Hp <= 0)
         {
+            Debug.Log("Death");
             alive = false;
             onDeath.Invoke();
         }
