@@ -10,7 +10,7 @@ public class PlayerController : MonoBehaviour
     public Rigidbody2D rb;
     Vector2 movement;
     public GameObject craftUI;
-
+    public EasyTween crafttingPanel;
     bool movable = true;
     private void Awake()
     {
@@ -43,7 +43,8 @@ public class PlayerController : MonoBehaviour
 
     void ToggleCraftUI()
     {
-        craftUI.SetActive(!craftUI.activeSelf);
+        //craftUI.SetActive(!craftUI.activeSelf);
+        crafttingPanel.OpenCloseObjectAnimation();
     }
 
     private void FixedUpdate()

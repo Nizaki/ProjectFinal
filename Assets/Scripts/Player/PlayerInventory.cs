@@ -48,41 +48,39 @@ public class PlayerInventory : MonoBehaviour
             Debug.LogError("Out of range");
             return;
         }
-        //if useable use it instead of select
-        switch (itemList[slot].type)
-        {
-            case ItemType.Food:
-                player.Eat(Mathf.FloorToInt(itemList[slot].data));
-                Debug.Log("Eat " + itemList[slot].name);
-                RemoveItem(itemList[slot].Item, 1);
-                break;
-            case ItemType.Water:
-                player.Drink(Mathf.FloorToInt(itemList[slot].data));
-                Debug.Log("Drink " + itemList[slot].name);
-                RemoveItem(itemList[slot].Item, 1);
-                break;
-            case ItemType.Health:
-                player.Heal(Mathf.FloorToInt(itemList[slot].data));
-                Debug.Log("Use " + itemList[slot].name);
-                RemoveItem(itemList[slot].Item, 1);
-                break;
-            case ItemType.Equip:
-                SelectedSlot = slot;
-                handRender.sprite = itemList[SelectedSlot].Item.sprite;
-                currentItem = itemList[SelectedSlot].Item;
-                onSelectSlot.Invoke(slot);
-                break;
-            case ItemType.Build:
-                SelectedSlot = slot;
-                handRender.sprite = null;
-                currentItem = itemList[SelectedSlot].Item;
-                onSelectSlot.Invoke(slot);
-                break;
-            case ItemType.None:
-                break;
-            default:
-                break;
-        }
+        SelectedSlot = slot;
+        onSelectSlot.Invoke(slot);
+        currentItem = itemList[SelectedSlot].Item;
+        Debug.Log(slot);
+        ////if useable use it instead of select
+        //switch (itemList[slot].type)
+        //{
+        //    case ItemType.Food:
+        //        player.Eat(Mathf.FloorToInt(itemList[slot].data));
+        //        Debug.Log("Eat " + itemList[slot].name);
+        //        RemoveItem(itemList[slot].Item, 1);
+        //        break;
+        //    case ItemType.Water:
+        //        player.Drink(Mathf.FloorToInt(itemList[slot].data));
+        //        Debug.Log("Drink " + itemList[slot].name);
+        //        RemoveItem(itemList[slot].Item, 1);
+        //        break;
+        //    case ItemType.Health:
+        //        player.Heal(Mathf.FloorToInt(itemList[slot].data));
+        //        Debug.Log("Use " + itemList[slot].name);
+        //        RemoveItem(itemList[slot].Item, 1);
+        //        break;
+        //    case ItemType.Equip:
+        //        handRender.sprite = itemList[SelectedSlot].Item.sprite;
+        //        break;
+        //    case ItemType.Build:
+        //        handRender.sprite = null;
+        //        break;
+        //    case ItemType.None:
+        //        break;
+        //    default:
+        //        break;
+        //}
     }
 
     private void Update()

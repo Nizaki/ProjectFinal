@@ -4,7 +4,7 @@ using UnityEngine;
 using UnityEngine.UI;
 public class UiPlayer : MonoBehaviour
 {
-    public Slider HpBar, HungerBar, WaterBar;
+    public Slider HpBar, HungerBar, WaterBar,LightBar;
     Player player;
     // Start is called before the first frame update
     void Start()
@@ -17,5 +17,6 @@ public class UiPlayer : MonoBehaviour
         HpBar.value = ((float)player.Hp / (float)player.MaxHP);
         HungerBar.value = (player.Hunger / player.MaxHunger);
         WaterBar.value = (player.Water / player.MaxWater);
+        LightBar.value = (player.darkDelay) / player.maxDarkDelay;
     }
 }

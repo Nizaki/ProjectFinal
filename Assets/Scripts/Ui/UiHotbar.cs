@@ -7,14 +7,19 @@ public class UiHotbar : MonoBehaviour
 {
     [SerializeField]
     Image[] slot;
+    [SerializeField]
+    GameObject[] selectedImage;
     PlayerInventory inventory;
     // Start is called before the first frame update
     void Start()
     {
         inventory = GameObject.FindGameObjectWithTag("Player").GetComponent<PlayerInventory>();
         inventory.onInvUpdate.AddListener(updateSlot);
+        inventory.onSelectSlot.AddListener(selectSlot);
         updateSlot();
     }
+
+    
 
     private void updateSlot()
     {
@@ -32,5 +37,22 @@ public class UiHotbar : MonoBehaviour
             }
         }
     }
+
+    private void selectSlot(int slot)
+    {
+        for(int i = 0; i < selectedImage.Length; i++)
+        {
+            selectedImage[i].SetActive(i == slot); ;
+            if (i == slot)
+                Debug.Log($"active {slot}");
+        }
+    }
+
+    private void OnDestroy()
+    {
+        inventory.onInvUpdate.RemoveListener(updateSlot);
+        inventory.onSelectSlot.RemoveListener(selectSlot);
+    }
+
 }
 

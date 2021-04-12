@@ -16,7 +16,8 @@ public class Player : MonoBehaviour
     public float WaterDrainRate = 0.1f;
     public float maxDarkDelay = 3;
     public UnityEvent onDeath;
-    float darkDelay = 0;
+    public UnityEvent<int> onTakeDamage;
+    public float darkDelay = 0;
     public List<GameObject> Interactable = new List<GameObject>();
     public bool UnderLight;
     float timer;
@@ -28,6 +29,8 @@ public class Player : MonoBehaviour
         Water = MaxWater;
         if (onDeath == null)
             onDeath = new UnityEvent();
+        if (onTakeDamage == null)
+            onTakeDamage = new UnityEvent<int>();
     }
 
     // Update is called once per frame
@@ -36,37 +39,46 @@ public class Player : MonoBehaviour
         if (!alive)
             return;
 
-        if (GameTime.state == TimeState.NiGHT)
+        if (UnderLight || GameTime.state == TimeState.DAY)
         {
-            if (UnderLight)
-            {
-                darkDelay = 0;
-                return;
-            }
-            darkDelay += Time.deltaTime;
+            darkDelay += 0.25f * Time.deltaTime;
             if (darkDelay > maxDarkDelay)
+                darkDelay = maxDarkDelay;
+            return;
+        }
+        if (GameTime.state == TimeState.NiGHT && !UnderLight)
+        {
+            darkDelay -= Time.deltaTime;
+            if (darkDelay <= 0)
             {
                 timer += 1 * Time.deltaTime;
-                if (timer > 1f)
+                if (timer > 3f)
                 {
-                    Hp -= 5;
+                    TakeDamage(25);
                     timer = 0;
                 }
             }
 
         }
-        else
-        {
-            darkDelay = 0;
-        }
 
-        if (Hp <= 0)
-        {
-            Debug.Log("Death");
-            alive = false;
-            onDeath.Invoke();
-        }
+        //if (Hp <= 0)
+        //{
+        //    //TODO: แยกฟังค์ชั้น ตายแล้ว ต้องควบคุมไม่ได้
+        //    Debug.Log("Death");
+        //    alive = false;
+        //    onDeath.Invoke();
+        //}
     }
+
+    void TakeDamage(int value)
+    {
+        Hp -= value;
+        if (Hp <= 0)
+            Debug.Log("ตาย");
+
+        onTakeDamage.Invoke(value);
+    }
+
     private void FixedUpdate()
     {
         Hunger -= HungerDrainRate * Time.fixedDeltaTime;
