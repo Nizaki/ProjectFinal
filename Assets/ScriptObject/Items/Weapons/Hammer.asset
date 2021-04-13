@@ -10,12 +10,12 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: e706ca42014e7e94a8a9158c8ddb5a36, type: 3}
-  m_Name: oragne
+  m_Name: Hammer
   m_EditorClassIdentifier: 
-  itemName: Orange
-  sprite: {fileID: 21300000, guid: 10dac184b59e6214b8f025121a183ea3, type: 3}
-  type: 1
-  data: 15
+  itemName: Hammer
+  sprite: {fileID: 21300000, guid: 488398fbc89e34845b2a9ba2104b9e4b, type: 3}
+  type: 4
+  data: 0
   fuelable: 0
   fuelAmount: 10
   description: 

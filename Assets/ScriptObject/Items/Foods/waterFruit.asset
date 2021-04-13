@@ -13,7 +13,7 @@ MonoBehaviour:
   m_Name: waterFruit
   m_EditorClassIdentifier: 
   itemName: Water Fruit
-  sprite: {fileID: 10913, guid: 0000000000000000f000000000000000, type: 0}
+  sprite: {fileID: 21300000, guid: 7696c821cd8cea5449a1b4f49111a03c, type: 3}
   type: 2
   data: 25
   fuelable: 1

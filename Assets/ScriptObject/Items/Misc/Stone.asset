@@ -13,9 +13,10 @@ MonoBehaviour:
   m_Name: Stone
   m_EditorClassIdentifier: 
   itemName: Stone
-  sprite: {fileID: 21300000, guid: eeef8785c4eeef448a009388dd63407b, type: 3}
+  sprite: {fileID: 21300000, guid: db9f2e6edaba8b2449577c788f36d6a4, type: 3}
   type: 0
   data: 0
   fuelable: 0
-  fuelAmount: 10
+  fuelAmount: 0
   description: 
+  prefab: {fileID: 0}

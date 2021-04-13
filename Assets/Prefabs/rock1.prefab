@@ -1,6 +1,6 @@
 %YAML 1.1
 %TAG !u! tag:unity3d.com,2011:
---- !u!1 &5043248020229994107
+--- !u!1 &285680286450963366
 GameObject:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -8,38 +8,39 @@ GameObject:
   m_PrefabAsset: {fileID: 0}
   serializedVersion: 6
   m_Component:
-  - component: {fileID: 4618735426575001123}
-  - component: {fileID: 1182266431533878934}
-  - component: {fileID: 3546708835717167647}
-  - component: {fileID: 4619401795804121438}
+  - component: {fileID: 5753630487648514767}
+  - component: {fileID: 726691054265384637}
+  - component: {fileID: 1646981817001046001}
+  - component: {fileID: 6473896101688633974}
+  - component: {fileID: 8504663000572214709}
   m_Layer: 0
-  m_Name: waterFruit
-  m_TagString: Untagged
+  m_Name: rock1
+  m_TagString: Interactive
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
   m_IsActive: 1
---- !u!4 &4618735426575001123
+--- !u!4 &5753630487648514767
 Transform:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 5043248020229994107}
+  m_GameObject: {fileID: 285680286450963366}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: -4.954724, y: -2.6368425, z: 0}
+  m_LocalPosition: {x: 9.719066, y: -1.3844337, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 0}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!212 &1182266431533878934
+--- !u!212 &726691054265384637
 SpriteRenderer:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 5043248020229994107}
+  m_GameObject: {fileID: 285680286450963366}
   m_Enabled: 1
   m_CastShadows: 0
   m_ReceiveShadows: 0
@@ -70,27 +71,27 @@ SpriteRenderer:
   m_AutoUVMaxDistance: 0.5
   m_AutoUVMaxAngle: 89
   m_LightmapParameters: {fileID: 0}
-  m_SortingLayerID: 0
-  m_SortingLayer: 0
+  m_SortingLayerID: -128255115
+  m_SortingLayer: 1
   m_SortingOrder: 0
-  m_Sprite: {fileID: 21300000, guid: 7696c821cd8cea5449a1b4f49111a03c, type: 3}
-  m_Color: {r: 0.6367924, g: 1, b: 0.9589473, a: 1}
+  m_Sprite: {fileID: 21300000, guid: 1dfafeef4b984c644951a90697f3a15a, type: 3}
+  m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_FlipX: 0
   m_FlipY: 0
   m_DrawMode: 0
-  m_Size: {x: 1, y: 1}
+  m_Size: {x: 0.29, y: 0.23}
   m_AdaptiveModeThreshold: 0.5
   m_SpriteTileMode: 0
   m_WasSpriteAssigned: 1
   m_MaskInteraction: 0
   m_SpriteSortPoint: 0
---- !u!58 &3546708835717167647
+--- !u!58 &1646981817001046001
 CircleCollider2D:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 5043248020229994107}
+  m_GameObject: {fileID: 285680286450963366}
   m_Enabled: 1
   m_Density: 1
   m_Material: {fileID: 0}
@@ -99,19 +100,47 @@ CircleCollider2D:
   m_UsedByComposite: 0
   m_Offset: {x: 0, y: 0}
   serializedVersion: 2
-  m_Radius: 0.5
---- !u!114 &4619401795804121438
+  m_Radius: 1.2
+--- !u!114 &6473896101688633974
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 5043248020229994107}
+  m_GameObject: {fileID: 285680286450963366}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 15a4353e187b34944b86f8bb528b7bd5, type: 3}
+  m_Script: {fileID: 11500000, guid: eb08c2241c63ece4996243cbac3c81a5, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  Item:
-    Item: {fileID: 11400000, guid: 39ecf58660a7ac144860e22a30acb324, type: 2}
-    count: 1
+  prefab: {fileID: 1506881121589561799, guid: 9c4fa7294505ad247886a5c7b856596f, type: 3}
+  count: 5
+  requireTool: {fileID: 11400000, guid: d1279942d99448642a1ba5f13137d765, type: 2}
+  dropOffset: 0.3
+  interactRange: 2
+--- !u!61 &8504663000572214709
+BoxCollider2D:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 285680286450963366}
+  m_Enabled: 1
+  m_Density: 1
+  m_Material: {fileID: 0}
+  m_IsTrigger: 0
+  m_UsedByEffector: 0
+  m_UsedByComposite: 0
+  m_Offset: {x: 0, y: -0.5827162}
+  m_SpriteTilingProperty:
+    border: {x: 0, y: 0, z: 0, w: 0}
+    pivot: {x: 0.5, y: 0.5}
+    oldSize: {x: 2.0625, y: 1.625}
+    newSize: {x: 0.29, y: 0.23}
+    adaptiveTilingThreshold: 0.5
+    drawMode: 0
+    adaptiveTiling: 0
+  m_AutoTiling: 0
+  serializedVersion: 2
+  m_Size: {x: 1.8125, y: 0.27206755}
+  m_EdgeRadius: 0
