@@ -8,7 +8,9 @@ public class PlayerInventory : MonoBehaviour
     public List<ItemStack> itemList = new List<ItemStack>(8);
     public int SelectedSlot = 0; //select item rage 0 - 9
     public ItemObject currentItem;
+    [HideInInspector]
     public UnityEvent<int> onSelectSlot;
+    [HideInInspector]
     public UnityEvent onInvUpdate;
     public SpriteRenderer handRender;
     Player player;
@@ -51,6 +53,7 @@ public class PlayerInventory : MonoBehaviour
         SelectedSlot = slot;
         onSelectSlot.Invoke(slot);
         currentItem = itemList[SelectedSlot].Item;
+        handRender.sprite = currentItem.sprite;
         Debug.Log(slot);
         ////if useable use it instead of select
         //switch (itemList[slot].type)
@@ -100,6 +103,7 @@ public class PlayerInventory : MonoBehaviour
                 }
     }
 
+    //invoke when not clicking ui
     public void Use()
     {
 

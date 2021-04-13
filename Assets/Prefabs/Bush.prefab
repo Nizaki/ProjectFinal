@@ -115,7 +115,9 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   prefab: {fileID: 3855546226113324409, guid: 84fb29475d33a4240867fb09b0a7496e, type: 3}
   count: 5
+  requireTool: {fileID: 0}
   dropOffset: 0.3
+  interactRange: 2
 --- !u!61 &972835975045242870
 BoxCollider2D:
   m_ObjectHideFlags: 0
@@ -123,7 +125,7 @@ BoxCollider2D:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 3565725505629100733}
-  m_Enabled: 1
+  m_Enabled: 0
   m_Density: 1
   m_Material: {fileID: 0}
   m_IsTrigger: 0

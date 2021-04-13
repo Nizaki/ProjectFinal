@@ -15,12 +15,23 @@ public class Player : MonoBehaviour
     public float MaxWater = 100f;
     public float WaterDrainRate = 0.1f;
     public float maxDarkDelay = 3;
+    [HideInInspector]
     public UnityEvent onDeath;
+    [HideInInspector]
     public UnityEvent<int> onTakeDamage;
-    public float darkDelay = 0;
+    public float darkDelay = 5;
+    [HideInInspector]
     public List<GameObject> Interactable = new List<GameObject>();
+    [HideInInspector]
     public bool UnderLight;
     float timer;
+    [SerializeField]
+    GameObject Holder;
+    [SerializeField]
+    Transform attackPos;
+    [SerializeField]
+    float attackRange;
+    public LayerMask enemy;
     // Start is called before the first frame update
     void Start()
     {
@@ -39,6 +50,20 @@ public class Player : MonoBehaviour
         if (!alive)
             return;
 
+
+        //if (Hp <= 0)
+        //{
+        //    //TODO: แยกฟังค์ชั้น ตายแล้ว ต้องควบคุมไม่ได้
+        //    Debug.Log("Death");
+        //    alive = false;
+        //    onDeath.Invoke();
+        //}
+        UpdateLight();
+        SwingLocation();
+    }
+
+    void UpdateLight()
+    {
         if (UnderLight || GameTime.state == TimeState.DAY)
         {
             darkDelay += 0.25f * Time.deltaTime;
@@ -46,6 +71,7 @@ public class Player : MonoBehaviour
                 darkDelay = maxDarkDelay;
             return;
         }
+
         if (GameTime.state == TimeState.NiGHT && !UnderLight)
         {
             darkDelay -= Time.deltaTime;
@@ -58,16 +84,22 @@ public class Player : MonoBehaviour
                     timer = 0;
                 }
             }
+            if(darkDelay < 0)
+            {
+                darkDelay = 0;
+            }
 
         }
+    }
 
-        //if (Hp <= 0)
-        //{
-        //    //TODO: แยกฟังค์ชั้น ตายแล้ว ต้องควบคุมไม่ได้
-        //    Debug.Log("Death");
-        //    alive = false;
-        //    onDeath.Invoke();
-        //}
+    void SwingLocation()
+    {
+        Vector3 pos = Camera.main.ScreenToWorldPoint(Input.mousePosition);
+        Vector3 dir = pos - Holder.transform.position;
+        float angle = Mathf.Atan2(dir.y, dir.x) * Mathf.Rad2Deg;
+        Holder.transform.rotation = Quaternion.AngleAxis(angle, Vector3.forward);
+        Collider2D[] toDamage = Physics2D.OverlapCircleAll(attackPos.position, attackRange);
+        Debug.Log(attackPos.position);
     }
 
     void TakeDamage(int value)
@@ -86,11 +118,8 @@ public class Player : MonoBehaviour
     }
     private void OnDrawGizmos()
     {
-        if (Interactable.Count > 0)
-        {
-            Gizmos.color = Color.red;
-            Gizmos.DrawWireSphere(GetClosetInteractable().transform.position, 1);
-        }
+        Gizmos.color = Color.red;
+        Gizmos.DrawWireSphere(attackPos.position,attackRange);
     }
 
     GameObject GetClosetInteractable()
