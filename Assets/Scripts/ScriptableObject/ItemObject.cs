@@ -8,6 +8,7 @@ public class ItemObject : ScriptableObject
     public string itemName;
     public Sprite sprite;
     public ItemType type;
+    public EquipType equipType = EquipType.None;
     [Tooltip("ตัวเลขตามผลของไอเท็มเช่น ถ้าเป็นอาหารจะเพิ่มความหิว")]
     public float data; //damge amount of hp hung bra bra
     public bool fuelable = false;
@@ -21,4 +22,9 @@ public class ItemObject : ScriptableObject
 public enum ItemType
 {
     None, Food, Water, Health, Equip, Build
+}
+
+public enum EquipType
+{
+    None,Axe,Sword
 }

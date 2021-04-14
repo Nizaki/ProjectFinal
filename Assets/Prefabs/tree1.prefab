@@ -10,9 +10,8 @@ GameObject:
   m_Component:
   - component: {fileID: 3312689144632556918}
   - component: {fileID: 4968348774389085575}
-  - component: {fileID: 1758367360091012618}
-  - component: {fileID: 6267812582546707511}
   - component: {fileID: 8950688677573710202}
+  - component: {fileID: 7537556065437746638}
   m_Layer: 0
   m_Name: tree1
   m_TagString: Interactive
@@ -85,49 +84,6 @@ SpriteRenderer:
   m_WasSpriteAssigned: 1
   m_MaskInteraction: 0
   m_SpriteSortPoint: 0
---- !u!114 &1758367360091012618
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 5136571850810194066}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: eb08c2241c63ece4996243cbac3c81a5, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  prefab: {fileID: 9055635565714402621, guid: f698dffa949a38d4dbca99478d66d935, type: 3}
-  count: 5
-  requireTool: {fileID: 11400000, guid: 202e543f08aab06479e49f79a0b22181, type: 2}
-  dropOffset: 0.2
-  interactRange: 3
---- !u!61 &6267812582546707511
-BoxCollider2D:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 5136571850810194066}
-  m_Enabled: 1
-  m_Density: 1
-  m_Material: {fileID: 0}
-  m_IsTrigger: 0
-  m_UsedByEffector: 0
-  m_UsedByComposite: 0
-  m_Offset: {x: 0.10074854, y: -1.9347591}
-  m_SpriteTilingProperty:
-    border: {x: 0, y: 0, z: 0, w: 0}
-    pivot: {x: 0.5, y: 0.5}
-    oldSize: {x: 5.625, y: 7.6875}
-    newSize: {x: 5.625, y: 7.6875}
-    adaptiveTilingThreshold: 0.5
-    drawMode: 0
-    adaptiveTiling: 0
-  m_AutoTiling: 0
-  serializedVersion: 2
-  m_Size: {x: 2.1652899, y: 2.3120012}
-  m_EdgeRadius: 0
 --- !u!61 &8950688677573710202
 BoxCollider2D:
   m_ObjectHideFlags: 0
@@ -138,7 +94,7 @@ BoxCollider2D:
   m_Enabled: 1
   m_Density: 1
   m_Material: {fileID: 0}
-  m_IsTrigger: 1
+  m_IsTrigger: 0
   m_UsedByEffector: 0
   m_UsedByComposite: 0
   m_Offset: {x: 0.13939166, y: -3.317145}
@@ -154,3 +110,27 @@ BoxCollider2D:
   serializedVersion: 2
   m_Size: {x: 2.3804317, y: 0.6142745}
   m_EdgeRadius: 0
+--- !u!114 &7537556065437746638
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5136571850810194066}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 0247c22e672882946a7962e45d145e34, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  Hp: 10
+  MaxHP: 10
+  EffectiveType: 1
+  DropList:
+  - chance: 100
+    item:
+      Item: {fileID: 11400000, guid: f8014fa55f6c05c448a6ee84e0f0fd95, type: 2}
+      count: 3
+  - chance: 80
+    item:
+      Item: {fileID: 11400000, guid: b4d49c00965a78e438719062db9dabf6, type: 2}
+      count: 1

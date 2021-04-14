@@ -59,7 +59,7 @@ public class Player : MonoBehaviour
         //    onDeath.Invoke();
         //}
         UpdateLight();
-        SwingLocation();
+        MoveTarget();
     }
 
     void UpdateLight()
@@ -92,14 +92,26 @@ public class Player : MonoBehaviour
         }
     }
 
-    void SwingLocation()
+    void MoveTarget()
     {
         Vector3 pos = Camera.main.ScreenToWorldPoint(Input.mousePosition);
         Vector3 dir = pos - Holder.transform.position;
         float angle = Mathf.Atan2(dir.y, dir.x) * Mathf.Rad2Deg;
         Holder.transform.rotation = Quaternion.AngleAxis(angle, Vector3.forward);
+    }
+
+    public void Attack()
+    {
         Collider2D[] toDamage = Physics2D.OverlapCircleAll(attackPos.position, attackRange);
-        Debug.Log(attackPos.position);
+        Debug.Log($"Attack found {toDamage.Length}");
+        foreach (Collider2D item in toDamage)
+        {
+            IDamagable damagable = item.gameObject.GetComponent<InterObject>();
+            if (damagable != null && !item.isTrigger)
+            {
+                damagable.TakeDamage(5);
+            }
+        }
     }
 
     void TakeDamage(int value)

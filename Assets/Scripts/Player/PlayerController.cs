@@ -6,6 +6,7 @@ using UnityEngine.EventSystems;
 public class PlayerController : MonoBehaviour
 {
     public PlayerController Instance;
+    public Player player;
     public float speed = 5f;
     public Rigidbody2D rb;
     Vector2 movement;
@@ -19,7 +20,7 @@ public class PlayerController : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
-
+        player = GetComponent<Player>();
     }
 
     // Update is called once per frame
@@ -42,7 +43,7 @@ public class PlayerController : MonoBehaviour
                 return;
             }
 
-            Debug.Log("Swing");
+            player.Attack();
         }
     }
 
