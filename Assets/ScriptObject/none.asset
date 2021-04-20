@@ -9,12 +9,15 @@ MonoBehaviour:
   m_GameObject: {fileID: 0}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: d9f81096074e6a84bbe421629caabf90, type: 3}
-  m_Name: Axe
+  m_Script: {fileID: 11500000, guid: e706ca42014e7e94a8a9158c8ddb5a36, type: 3}
+  m_Name: none
   m_EditorClassIdentifier: 
-  Input:
-  - Item: {fileID: 11400000, guid: f8014fa55f6c05c448a6ee84e0f0fd95, type: 2}
-    count: 1
-  Output:
-    Item: {fileID: 11400000, guid: 202e543f08aab06479e49f79a0b22181, type: 2}
-    count: 0
+  itemName: 
+  sprite: {fileID: 0}
+  type: 0
+  equipType: 0
+  data: 0
+  fuelable: 0
+  fuelAmount: 10
+  description: 
+  prefab: {fileID: 0}

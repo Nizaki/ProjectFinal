@@ -33,6 +33,7 @@ public class Player : MonoBehaviour
   float attackRange;
   public Animator punchAnim;
   public LayerMask enemy;
+  public PlayerInventory inventory;
   // Start is called before the first frame update
   void Start()
   {
@@ -50,17 +51,20 @@ public class Player : MonoBehaviour
   {
     if (!alive)
       return;
-
-
-    //if (Hp <= 0)
-    //{
-    //    //TODO: แยกฟังค์ชั้น ตายแล้ว ต้องควบคุมไม่ได้
-    //    Debug.Log("Death");
-    //    alive = false;
-    //    onDeath.Invoke();
-    //}
     UpdateLight();
     MoveTarget();
+
+
+    var ray = Physics2D.OverlapCircleAll(transform.position, 1f);
+    foreach (var item in ray)
+    {
+      var citem = item.GetComponent<DropItem>();
+      if (citem != null)
+      {
+        inventory.AddItem(citem.item);
+        Destroy(item.gameObject);
+      }
+    }
   }
 
   void UpdateLight()
@@ -104,6 +108,10 @@ public class Player : MonoBehaviour
   public void Attack()
   {
     punchAnim.SetTrigger("punch");
+  }
+
+  public void DoDamage()
+  {
     Collider2D[] toDamage = Physics2D.OverlapCircleAll(attackPos.position, attackRange);
     Debug.Log($"Attack found {toDamage.Length}");
     foreach (Collider2D item in toDamage)
@@ -134,6 +142,8 @@ public class Player : MonoBehaviour
   {
     Gizmos.color = Color.red;
     Gizmos.DrawWireSphere(attackPos.position, attackRange);
+    Gizmos.color = Color.green;
+    Gizmos.DrawWireSphere(transform.position, 1f);
   }
 
   GameObject GetClosetInteractable()

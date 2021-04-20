@@ -10,7 +10,6 @@ GameObject:
   m_Component:
   - component: {fileID: 5753630487648514767}
   - component: {fileID: 726691054265384637}
-  - component: {fileID: 6473896101688633974}
   - component: {fileID: 8504663000572214709}
   - component: {fileID: -7019467260081884899}
   - component: {fileID: 4276986319278682085}
@@ -86,23 +85,6 @@ SpriteRenderer:
   m_WasSpriteAssigned: 1
   m_MaskInteraction: 0
   m_SpriteSortPoint: 0
---- !u!114 &6473896101688633974
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 285680286450963366}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: eb08c2241c63ece4996243cbac3c81a5, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  prefab: {fileID: 1506881121589561799, guid: 9c4fa7294505ad247886a5c7b856596f, type: 3}
-  count: 5
-  requireTool: {fileID: 11400000, guid: d1279942d99448642a1ba5f13137d765, type: 2}
-  dropOffset: 0.3
-  interactRange: 2
 --- !u!61 &8504663000572214709
 BoxCollider2D:
   m_ObjectHideFlags: 0
@@ -244,7 +226,12 @@ MonoBehaviour:
   ai: 0
   FollowDistance: 5
   attackRange: 5
-  DropList: []
+  DropList:
+  - chance: 100
+    item:
+      Item: {fileID: 11400000, guid: 297a869bbd27866468b3f5d13e46707d, type: 2}
+      count: 1
   attackDelay: 5
+  customeDropLocation: {fileID: 0}
   hit: {fileID: 8300000, guid: 9b352cbd01fcb614c99709c20977eea9, type: 3}
   die: {fileID: 0}

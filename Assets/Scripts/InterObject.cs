@@ -19,13 +19,15 @@ public class InterObject : MonoBehaviour, IDamagable
   [ConditionalField("hasAI")]
   public float attackRange = 5f;
   [SerializeField]
-  public List<DropItem> DropList;
+  public List<ChanceItem> DropList;
   GameObject player;
   Vector2 targetPos;
   bool moving = false;
   [ConditionalField("hasAI")]
   public float attackDelay = 5f;
   float currectAttackDelay = 0f;
+  [SerializeField]
+  Transform customeDropLocation;
   public AudioClip hit, die;
   AudioSource source;
   public virtual void Start()
@@ -45,7 +47,7 @@ public class InterObject : MonoBehaviour, IDamagable
 
   public void TakeDamage(int damage, EquipType sourceEquip = EquipType.None)
   {
-    source.PlayOneShot(hit);
+    AudioPlayer.Instance.play(hit);
     if (sourceEquip == EffectiveType)
     {
       Hp -= 5;
@@ -57,7 +59,7 @@ public class InterObject : MonoBehaviour, IDamagable
     Debug.Log($"{this.name} ({Hp}/{MaxHP})");
     if (Hp <= 0)
     {
-      StartCoroutine(nameof(Die));
+      Die();
     }
   }
 
@@ -149,19 +151,11 @@ public class InterObject : MonoBehaviour, IDamagable
     }
   }
 
-  IEnumerator Die()
+  void Die()
   {
     Debug.Log("Die");
     alive = false;
-    foreach (DropItem item in DropList)
-    {
-      if (item.chance > Random.Range(0, 100))
-      {
-        //TODO : spawn item that player can pickup;
-        Debug.Log($"Drop {item.item.name}");
-      }
-    }
-    yield return new WaitForSeconds(1f);
+    DropManager.Instance.RandomDrop(DropList, customeDropLocation ? customeDropLocation.position : transform.position);
     Destroy(this.gameObject);
   }
   private void OnDrawGizmos()
@@ -185,11 +179,4 @@ public enum AI
   Attack, // when in range try to attck after attack check if can attack another time if not switch to follow
 }
 
-[System.Serializable]
-public class DropItem
-{
-  [SerializeField, Range(0, 100)]
-  public int chance;
-  [SerializeField]
-  public ItemStack item;
-}
+

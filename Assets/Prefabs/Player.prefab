@@ -171,7 +171,20 @@ MonoBehaviour:
           m_StringArgument: 
           m_BoolArgument: 1
         m_CallState: 2
+  onTakeDamage:
+    m_PersistentCalls:
+      m_Calls: []
+  darkDelay: 5
   Interactable: []
+  UnderLight: 0
+  Holder: {fileID: 0}
+  attackPos: {fileID: 0}
+  attackRange: 0
+  punchAnim: {fileID: 0}
+  enemy:
+    serializedVersion: 2
+    m_Bits: 0
+  inventory: {fileID: 0}
 --- !u!114 &8806422040276876049
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -184,8 +197,12 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 1239425ebfa06fa40b476976b109a4ef, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  Instance: {fileID: 0}
+  player: {fileID: 0}
   speed: 100
   rb: {fileID: 8806422040276876044}
+  craftUI: {fileID: 0}
+  crafttingPanel: {fileID: 0}
 --- !u!114 &8806422040276876048
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -199,55 +216,34 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   itemList:
-  - name: 
-    sprite: {fileID: 0}
-    type: 0
-    data: 0
+  - Item: {fileID: 11400000, guid: c88a5377c4dc51e43b94479a9710d4f5, type: 2}
     count: 0
-  - name: 
-    sprite: {fileID: 0}
-    type: 0
-    data: 0
+  - Item: {fileID: 11400000, guid: c88a5377c4dc51e43b94479a9710d4f5, type: 2}
     count: 0
-  - name: 
-    sprite: {fileID: 0}
-    type: 0
-    data: 0
+  - Item: {fileID: 11400000, guid: c88a5377c4dc51e43b94479a9710d4f5, type: 2}
     count: 0
-  - name: 
-    sprite: {fileID: 0}
-    type: 0
-    data: 0
+  - Item: {fileID: 11400000, guid: c88a5377c4dc51e43b94479a9710d4f5, type: 2}
     count: 0
-  - name: 
-    sprite: {fileID: 0}
-    type: 0
-    data: 0
+  - Item: {fileID: 11400000, guid: c88a5377c4dc51e43b94479a9710d4f5, type: 2}
     count: 0
-  - name: 
-    sprite: {fileID: 0}
-    type: 0
-    data: 0
+  - Item: {fileID: 11400000, guid: c88a5377c4dc51e43b94479a9710d4f5, type: 2}
     count: 0
-  - name: 
-    sprite: {fileID: 0}
-    type: 0
-    data: 0
+  - Item: {fileID: 11400000, guid: c88a5377c4dc51e43b94479a9710d4f5, type: 2}
     count: 0
-  - name: 
-    sprite: {fileID: 0}
-    type: 0
-    data: 0
+  - Item: {fileID: 11400000, guid: c88a5377c4dc51e43b94479a9710d4f5, type: 2}
     count: 0
-  - name: 
-    sprite: {fileID: 0}
-    type: 0
-    data: 0
+  - Item: {fileID: 11400000, guid: c88a5377c4dc51e43b94479a9710d4f5, type: 2}
     count: 0
   SelectedSlot: 0
+  currentItem: {fileID: 0}
   onSelectSlot:
     m_PersistentCalls:
       m_Calls: []
   onInvUpdate:
     m_PersistentCalls:
       m_Calls: []
+  onInventoryUpdate:
+    m_PersistentCalls:
+      m_Calls: []
+  handRender: {fileID: 0}
+  noneItem: {fileID: 11400000, guid: c88a5377c4dc51e43b94479a9710d4f5, type: 2}
