@@ -17,7 +17,7 @@ public class CampFire : MonoBehaviour, IPointerClickHandler
 
     private void FixedUpdate()
     {
-        if (GameTime.state == TimeState.DAY)
+        if (GameTime.state == TimeState.Day)
         {
             light2D.SetActive(false);
         }
@@ -26,7 +26,7 @@ public class CampFire : MonoBehaviour, IPointerClickHandler
         {
             coli.enabled = true;
             fuel -= fuelDrain * Time.fixedDeltaTime;
-            if (GameTime.state == TimeState.NiGHT)
+            if (GameTime.state == TimeState.Night)
             {
                 light2D.SetActive(true);
             }

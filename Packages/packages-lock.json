@@ -94,7 +94,7 @@
       "hash": "ad55cedf04a6b1ae294f5a6ff4f06d6f450bfb18"
     },
     "com.unity.cinemachine": {
-      "version": "2.7.1",
+      "version": "2.7.3",
       "depth": 0,
       "source": "registry",
       "dependencies": {},
@@ -184,7 +184,7 @@
       "url": "https://packages.unity.com"
     },
     "com.unity.test-framework": {
-      "version": "1.1.22",
+      "version": "1.1.24",
       "depth": 0,
       "source": "registry",
       "dependencies": {
@@ -195,7 +195,7 @@
       "url": "https://packages.unity.com"
     },
     "com.unity.textmeshpro": {
-      "version": "3.0.3",
+      "version": "3.0.5",
       "depth": 0,
       "source": "registry",
       "dependencies": {

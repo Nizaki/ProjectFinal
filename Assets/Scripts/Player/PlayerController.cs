@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.EventSystems;
-
+using DG.Tweening;
 public class PlayerController : MonoBehaviour
 {
   public PlayerController Instance;
@@ -13,6 +13,7 @@ public class PlayerController : MonoBehaviour
   public GameObject craftUI;
   public EasyTween crafttingPanel;
   bool movable = true;
+  bool craftingUI = false;
   private void Awake()
   {
     Instance = this;
@@ -53,8 +54,15 @@ public class PlayerController : MonoBehaviour
 
   void ToggleCraftUI()
   {
-    //craftUI.SetActive(!craftUI.activeSelf);
-    crafttingPanel.OpenCloseObjectAnimation();
+    if (craftingUI)
+    {
+      craftUI.transform.DOLocalMoveX(780, 0.5f).SetEase(Ease.InSine);
+    }
+    else
+    {
+      craftUI.transform.DOLocalMoveX(500, 0.5f).SetEase(Ease.OutSine);
+    }
+    craftingUI = !craftingUI;
   }
 
   private void FixedUpdate()

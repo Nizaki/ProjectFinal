@@ -28,9 +28,9 @@ public class Player : MonoBehaviour
   [SerializeField]
   GameObject Holder;
   [SerializeField]
-  Transform attackPos;
+  private Transform attackPos;
   [SerializeField]
-  float attackRange;
+  private float attackRange;
   public Animator punchAnim;
   public LayerMask enemy;
   public PlayerInventory inventory;
@@ -40,10 +40,8 @@ public class Player : MonoBehaviour
     Hp = MaxHP;
     Hunger = MaxHunger;
     Water = MaxWater;
-    if (onDeath == null)
-      onDeath = new UnityEvent();
-    if (onTakeDamage == null)
-      onTakeDamage = new UnityEvent<int>();
+    onDeath ??= new UnityEvent();
+    onTakeDamage ??= new UnityEvent<int>();
   }
 
   // Update is called once per frame
@@ -62,6 +60,7 @@ public class Player : MonoBehaviour
       if (citem != null)
       {
         inventory.AddItem(citem.item);
+        Notification.ShowNotification($"ได้รับ {citem.item.name} 1 ชิ้น");
         Destroy(item.gameObject);
       }
     }
@@ -69,7 +68,7 @@ public class Player : MonoBehaviour
 
   void UpdateLight()
   {
-    if (UnderLight || GameTime.state == TimeState.DAY)
+    if (UnderLight || GameTime.state == TimeState.Day)
     {
       darkDelay += 0.25f * Time.deltaTime;
       if (darkDelay > maxDarkDelay)
@@ -77,7 +76,7 @@ public class Player : MonoBehaviour
       return;
     }
 
-    if (GameTime.state == TimeState.NiGHT && !UnderLight)
+    if (GameTime.state == TimeState.Night && !UnderLight)
     {
       darkDelay -= Time.deltaTime;
       if (darkDelay <= 0)

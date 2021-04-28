@@ -4,40 +4,37 @@ using UnityEngine;
 
 public class DropManager : MonoBehaviour
 {
-  public static DropManager Instance { get { return _instance; } }
-  private static DropManager _instance;
+  public static DropManager Instance { get; private set; }
 
   [SerializeField]
   private GameObject dropTemplate;
 
   private void Awake()
   {
-    if (_instance != null && _instance != this)
+    if (Instance != null && Instance != this)
     {
-      Destroy(this.gameObject);
+      Destroy(gameObject);
       return;
     }
-    if (_instance == null)
+    if (Instance == null)
     {
-      _instance = this;
+      Instance = this;
     }
   }
 
-  public void RandomDrop(List<ChanceItem> drop, Vector2 pos)
+  public static void RandomDrop(IEnumerable<ChanceItem> drop, Vector2 pos)
   {
-    foreach (ChanceItem item in drop)
+    foreach (var item in drop)
     {
-      DropManager.Instance.RandomDrop(item, pos);
+      Instance.RandomDrop(item, pos);
     }
   }
 
-  public void RandomDrop(ChanceItem drop, Vector2 pos)
+  private void RandomDrop(ChanceItem drop, Vector2 pos)
   {
-    if (drop.chance > Random.Range(0, 100))
-    {
-      var obj = Instantiate(dropTemplate, pos, Quaternion.identity);
-      obj.GetComponent<DropItem>().item = drop.item.Item;
-    }
+    if (drop.chance <= Random.Range(0, 100)) return;
+    var obj = Instantiate(dropTemplate, pos, Quaternion.identity);
+    obj.GetComponent<DropItem>().item = drop.item.Item;
   }
 
 }

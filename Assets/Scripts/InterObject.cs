@@ -155,7 +155,7 @@ public class InterObject : MonoBehaviour, IDamagable
   {
     Debug.Log("Die");
     alive = false;
-    DropManager.Instance.RandomDrop(DropList, customeDropLocation ? customeDropLocation.position : transform.position);
+    DropManager.RandomDrop(DropList, customeDropLocation ? customeDropLocation.position : transform.position);
     Destroy(this.gameObject);
   }
   private void OnDrawGizmos()

@@ -18,7 +18,6 @@ public class ItemObject : ScriptableObject
     public GameObject prefab;
 }
 
-
 public enum ItemType
 {
     None, Food, Water, Health, Equip, Build

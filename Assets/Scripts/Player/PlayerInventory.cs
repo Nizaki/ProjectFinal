@@ -6,7 +6,7 @@ using UnityEngine.Events;
 public class PlayerInventory : MonoBehaviour
 {
   public List<ItemStack> itemList = new List<ItemStack>(8);
-  public int SelectedSlot = 0; //select item rage 0 - 9
+  public int selectedSlot = 0; //select item rage 0 - 9
   public ItemObject currentItem;
   [HideInInspector]
   public UnityEvent<int> onSelectSlot;
@@ -20,12 +20,9 @@ public class PlayerInventory : MonoBehaviour
   ItemObject noneItem;
   private void Awake()
   {
-    if (onSelectSlot == null)
-      onSelectSlot = new UnityEvent<int>();
-    if (onInvUpdate == null)
-      onInvUpdate = new UnityEvent();
-    if (onInventoryUpdate == null)
-      onInventoryUpdate = new UnityEvent<List<ItemStack>>();
+    onSelectSlot ??= new UnityEvent<int>();
+    onInvUpdate ??= new UnityEvent();
+    onInventoryUpdate ??= new UnityEvent<List<ItemStack>>();
     player = GetComponent<Player>();
   }
   private void Start()
@@ -34,32 +31,31 @@ public class PlayerInventory : MonoBehaviour
   }
   public bool AddItem(ItemObject item, int count = 1)
   {
-    ItemStack temp = new ItemStack();
-    temp.Item = item;
-    temp.count = count;
+    var temp = new ItemStack {Item = item, count = count};
     return AddItem(temp);
   }
 
   public bool AddItem(ItemStack item)
   {
-    for (int i = 0; i < itemList.Count; i++)
+    foreach (var t in itemList)
     {
-      if (itemList[i].Item == noneItem)
+      if (t.Item == noneItem)
       {
-        itemList[i].Item = item.Item;
-        itemList[i].count = item.count;
+        t.Item = item.Item;
+        t.count = item.count;
         onInvUpdate.Invoke();
         onInventoryUpdate.Invoke(itemList);
         return true;
       }
-      else if (itemList[i].name == item.name)
+      else if (t.name == item.name)
       {
-        itemList[i].count += 1;
+        t.count += 1;
         onInvUpdate.Invoke();
         onInventoryUpdate.Invoke(itemList);
         return true;
       }
     }
+
     return false;
   }
 
@@ -70,9 +66,9 @@ public class PlayerInventory : MonoBehaviour
       Debug.LogError("Out of range");
       return;
     }
-    SelectedSlot = slot;
+    selectedSlot = slot;
     onSelectSlot.Invoke(slot);
-    currentItem = itemList[SelectedSlot].Item;
+    currentItem = itemList[selectedSlot].Item;
     handRender.sprite = currentItem.sprite;
     Debug.Log(slot);
     ////if useable use it instead of select
@@ -108,19 +104,19 @@ public class PlayerInventory : MonoBehaviour
 
   private void Update()
   {
-    if (currentItem != null)
-      if (currentItem.type == ItemType.Build)
-        if (Input.GetMouseButtonDown(0))
-        {
+    if (currentItem == null) return;
+    if (currentItem.type != ItemType.Build) return;
+    if (Input.GetMouseButtonDown(0))
+    {
 
-          Vector3 worldPos = Camera.main.ScreenToWorldPoint(Input.mousePosition);
-          worldPos.z = 0;
-          if (currentItem.prefab != null)
-          {
-            Instantiate(currentItem.prefab, worldPos, Quaternion.identity);
-            RemoveItem(currentItem, 1);
-          }
-        }
+      Vector3 worldPos = Camera.main.ScreenToWorldPoint(Input.mousePosition);
+      worldPos.z = 0;
+      if (currentItem.prefab != null)
+      {
+        Instantiate(currentItem.prefab, worldPos, Quaternion.identity);
+        RemoveItem(currentItem, 1);
+      }
+    }
   }
 
   //invoke when not clicking ui
