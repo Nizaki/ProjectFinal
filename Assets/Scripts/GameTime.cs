@@ -15,7 +15,7 @@ public class GameTime : MonoBehaviour
     public float timeSpeed = 1f;
     public static TimeState state = TimeState.Night;
     public int day;
-
+    public float totalTime;
     public Light2D light2D;
 
     // Start is called before the first frame update
@@ -27,7 +27,11 @@ public class GameTime : MonoBehaviour
     private void FixedUpdate()
     {
         if (running)
+        {
             time += timeSpeed * Time.fixedDeltaTime;
+            totalTime += timeSpeed * Time.fixedDeltaTime;
+        }
+
         label.text = string.Format($"day:{day} Time:{state}");
         if (time < dayLength && state == TimeState.Night)
         {

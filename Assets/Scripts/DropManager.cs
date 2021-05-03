@@ -1,6 +1,8 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using Random = UnityEngine.Random;
 
 public class DropManager : MonoBehaviour
 {
@@ -33,6 +35,11 @@ public class DropManager : MonoBehaviour
         if (drop.chance <= Random.Range(0, 100)) return;
         var obj = Instantiate(dropTemplate, pos, Quaternion.identity);
         obj.GetComponent<DropItem>().item = drop.item.Item;
+    }
+
+    private void OnDestroy()
+    {
+        Instance = null;
     }
 }
 
