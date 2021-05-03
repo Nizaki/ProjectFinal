@@ -7,17 +7,15 @@ public class CraftPanel : MonoBehaviour
 {
     public List<RecipeObject> recipes;
     public ItemSlot slot1, slot2, output;
-    [SerializeField]
-    ItemSlot[] slot;
-    PlayerInventory inventory;
-    [SerializeField]
-    ItemStack input1, input2;
-    ItemStack outputItem;
-    int index1 = -1, index2 = -1, recipeIndex = -1;
-    bool craftable = false;
+    [SerializeField] private ItemSlot[] slot;
+    private PlayerInventory inventory;
+    [SerializeField] private ItemStack input1, input2;
+    private ItemStack outputItem;
+    private int index1 = -1, index2 = -1, recipeIndex = -1;
+    private bool craftable = false;
+
     private void Awake()
     {
-
         inventory = GameObject.FindGameObjectWithTag("Player").GetComponent<PlayerInventory>();
     }
 
@@ -26,10 +24,12 @@ public class CraftPanel : MonoBehaviour
         ClearCraftPanel();
         updateSlot();
     }
+
     private void OnDisable()
     {
         TooltipsScreenSpace.HideTooltip();
     }
+
     // 0-8 inventory 9-10 input 11 output
     public void SlotClick(int slot)
     {
@@ -87,25 +87,23 @@ public class CraftPanel : MonoBehaviour
                 }
             }
         }
-        if (!craftable)
-        {
-            output.Clear();
-        }
+
+        if (!craftable) output.Clear();
     }
 
     public void Craft()
     {
         if (craftable)
-        {
-            if (inventory.RemoveItem(recipes[recipeIndex].Input[0]) && inventory.RemoveItem(recipes[recipeIndex].Input[1]))
+            if (inventory.RemoveItem(recipes[recipeIndex].Input[0]) &&
+                inventory.RemoveItem(recipes[recipeIndex].Input[1]))
             {
                 inventory.AddItem(recipes[recipeIndex].Output);
                 ClearCraftPanel();
                 updateSlot();
             }
-        }
     }
-    void ClearCraftPanel()
+
+    private void ClearCraftPanel()
     {
         output.Clear();
         slot1.Clear();
@@ -114,20 +112,14 @@ public class CraftPanel : MonoBehaviour
         input2.clear();
         craftable = false;
     }
-    // Update is called once per frame
-    void updateSlot()
-    {
 
+    // Update is called once per frame
+    private void updateSlot()
+    {
         foreach (var (item, index) in inventory.itemList.WithIndex())
-        {
             if (item.Item != null)
-            {
                 slot[index].UpdateSlot(item);
-            }
             else
-            {
                 slot[index].Clear();
-            }
-        }
     }
 }

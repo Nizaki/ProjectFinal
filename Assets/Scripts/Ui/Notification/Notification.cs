@@ -4,35 +4,31 @@ using UnityEngine;
 
 public class Notification : MonoBehaviour
 {
-  public static Notification Instance { get { return _instance; } }
-  private static Notification _instance;
-  [SerializeField]
-  Transform viewport;
-  [SerializeField]
-  GameObject notiTemplate;
+    public static Notification Instance => _instance;
+    private static Notification _instance;
+    [SerializeField] private Transform viewport;
+    [SerializeField] private GameObject notiTemplate;
 
-  void Awake()
-  {
-    if (_instance != null && _instance != this)
+    private void Awake()
     {
-      Destroy(this.gameObject);
-      return;
+        if (_instance != null && _instance != this)
+        {
+            Destroy(gameObject);
+            return;
+        }
+
+        if (_instance == null) _instance = this;
     }
-    if (_instance == null)
+
+    public void Show(string text)
     {
-      _instance = this;
+        var obj = Instantiate(notiTemplate, viewport.transform);
+        obj.transform.SetParent(viewport);
+        obj.GetComponentInChildren<TMPro.TextMeshProUGUI>().text = text;
     }
-  }
 
-  public void Show(string text)
-  {
-    var obj = Instantiate(notiTemplate, viewport.transform);
-    obj.transform.SetParent(viewport);
-    obj.GetComponentInChildren<TMPro.TextMeshProUGUI>().text = text;
-  }
-
-  public static void ShowNotification(string text)
-  {
-    Instance.Show(text);
-  }
+    public static void ShowNotification(string text)
+    {
+        Instance.Show(text);
+    }
 }

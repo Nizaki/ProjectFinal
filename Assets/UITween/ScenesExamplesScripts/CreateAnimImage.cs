@@ -3,100 +3,93 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine.UI;
 
-public class CreateAnimImage : MonoBehaviour {
+public class CreateAnimImage : MonoBehaviour
+{
+    public CreateAnimImage[] createImageOtherReference;
 
-	public CreateAnimImage[] createImageOtherReference;
+    public GameObject CreateInstance;
 
-	public GameObject CreateInstance;
+    public int HowManyButtons;
 
-	public int HowManyButtons;
+    public Vector3 StartAnim;
+    public Vector3 EndAnim;
 
-	public Vector3 StartAnim;
-	public Vector3 EndAnim;
+    public float Offset;
 
-	public float Offset;
+    public AnimationCurve EnterAnim;
+    public AnimationCurve ExitAnim;
 
-	public AnimationCurve EnterAnim;
-	public AnimationCurve ExitAnim;
+    public RectTransform RootRect;
+    public RectTransform RootCanvas;
 
-	public RectTransform RootRect;
-	public RectTransform RootCanvas;
+    private List<EasyTween> Created = new List<EasyTween>();
 
-	private List<EasyTween> Created = new List<EasyTween>();
+    private Vector2 InitialCanvasScrollSize;
+    private float totalWidth = 0f;
 
-	private Vector2 InitialCanvasScrollSize;
-	private float totalWidth = 0f;
+    private void Start()
+    {
+        InitialCanvasScrollSize = new Vector2(RootRect.rect.height, RootRect.rect.width);
+    }
 
-	void Start()
-	{
-		InitialCanvasScrollSize = new Vector2(RootRect.rect.height, RootRect.rect.width);
-	}
+    public void CallBack()
+    {
+        if (Created.Count == 0)
+        {
+            for (var i = 0; i < createImageOtherReference.Length; i++) createImageOtherReference[i].DestroyButtons();
 
-	public void CallBack()
-	{
-		if (Created.Count == 0)
-		{
-			for (int i = 0; i < createImageOtherReference.Length; i++)
-			{
-				createImageOtherReference[i].DestroyButtons();
-			}
+            CreateButtons();
+        }
+    }
 
-			CreateButtons();
-		}
-	}
+    public void DestroyButtons()
+    {
+        for (var i = 0; i < Created.Count; i++) Created[i].OpenCloseObjectAnimation();
 
-	public void DestroyButtons()
-	{
-		for (int i = 0; i < Created.Count; i++)
-		{
-			Created[i].OpenCloseObjectAnimation();
-		}
+        Created.Clear();
+    }
 
-		Created.Clear();
-	}
+    public void CreateButtons()
+    {
+        CreatePanels();
+        AdaptCanvas();
+    }
 
-	public void CreateButtons()
-	{
-		CreatePanels();
-		AdaptCanvas();
-	}
+    private void CreatePanels()
+    {
+        var InstancePosition = EndAnim;
 
-	private void CreatePanels()
-	{
-		Vector3 InstancePosition = EndAnim;
+        totalWidth = 0f;
 
-		totalWidth = 0f;
+        for (var i = 0; i < HowManyButtons; i++)
+        {
+            // Creates Instance
+            var createInstance = Instantiate(CreateInstance) as GameObject;
+            // Changes the Parent, Assing to scroll List
+            createInstance.transform.SetParent(RootRect, false);
+            var easy = createInstance.GetComponent<EasyTween>();
+            // Add Tween To List
+            Created.Add(easy);
+            // Final Position
+            StartAnim.y = InstancePosition.y;
+            // Pass the positions to the Tween system
+            easy.SetAnimationPosition(StartAnim, InstancePosition, EnterAnim, ExitAnim);
+            // Intro fade
+            easy.SetFade();
+            // Execute Animation
+            easy.OpenCloseObjectAnimation();
+            // Increases the Y offset
+            InstancePosition.y += Offset;
 
-		for (int i = 0; i < HowManyButtons; i++)
-		{
-			// Creates Instance
-			GameObject createInstance = Instantiate(CreateInstance) as GameObject;
-			// Changes the Parent, Assing to scroll List
-			createInstance.transform.SetParent(RootRect, false);
-			EasyTween easy = createInstance.GetComponent<EasyTween>();
-			// Add Tween To List
-			Created.Add(easy);
-			// Final Position
-			StartAnim.y = InstancePosition.y;
-			// Pass the positions to the Tween system
-			easy.SetAnimationPosition(StartAnim, InstancePosition , EnterAnim, ExitAnim);
-			// Intro fade
-			easy.SetFade();
-			// Execute Animation
-			easy.OpenCloseObjectAnimation();
-			// Increases the Y offset
-			InstancePosition.y += Offset;
+            totalWidth += Offset;
+        }
+    }
 
-			totalWidth += Offset;
-		}
-	}
-
-	private void AdaptCanvas()
-	{
-		// Vertical Dynamic Adapter
-		if (InitialCanvasScrollSize.x < Mathf.Abs(totalWidth) )
-		{
-			RootRect.offsetMin = new Vector2(RootRect.offsetMin.x, totalWidth + InitialCanvasScrollSize.x + RootRect.offsetMax.y);
-		}
-	}
+    private void AdaptCanvas()
+    {
+        // Vertical Dynamic Adapter
+        if (InitialCanvasScrollSize.x < Mathf.Abs(totalWidth))
+            RootRect.offsetMin = new Vector2(RootRect.offsetMin.x,
+                totalWidth + InitialCanvasScrollSize.x + RootRect.offsetMax.y);
+    }
 }

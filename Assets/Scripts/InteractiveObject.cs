@@ -2,19 +2,16 @@
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.EventSystems;
+
 public class InteractiveObject : MonoBehaviour, IPointerClickHandler
 {
-    [SerializeField]
-    GameObject prefab;
-    [SerializeField]
-    int count = 1;
-    [SerializeField]
-    ItemObject requireTool;
-    [SerializeField]
-    float dropOffset = 0.2f;
-    [SerializeField]
-    float interactRange = 2f;
-    GameObject player;
+    [SerializeField] private GameObject prefab;
+    [SerializeField] private int count = 1;
+    [SerializeField] private ItemObject requireTool;
+    [SerializeField] private float dropOffset = 0.2f;
+    [SerializeField] private float interactRange = 2f;
+    private GameObject player;
+
     private void Awake()
     {
         player = GameObject.FindGameObjectWithTag("Player");

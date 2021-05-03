@@ -19,16 +19,16 @@ using UITween;
 [System.Serializable]
 public class EasyTween : MonoBehaviour
 {
-
     public RectTransform rectTransform;
+
     public AnimationParts animationParts = new AnimationParts(AnimationParts.State.CLOSE,
-                                               false,
-                                               false,
-                                               false,
-                                               AnimationParts.EndTweenClose.DEACTIVATE,
-                                               AnimationParts.CallbackCall.NOTHING,
-                                               new UnityEvent(),
-                                               new UnityEvent());
+        false,
+        false,
+        false,
+        AnimationParts.EndTweenClose.DEACTIVATE,
+        AnimationParts.CallbackCall.NOTHING,
+        new UnityEvent(),
+        new UnityEvent());
 
     private CurrentAnimation currentAnimationGoing;
 
@@ -69,17 +69,20 @@ public class EasyTween : MonoBehaviour
         return currentAnimationGoing.GetAnimationDuration();
     }
 
-    public void SetAnimationPosition(Vector2 StartAnchoredPos, Vector2 EndAnchoredPos, AnimationCurve EntryTween, AnimationCurve ExitTween)
+    public void SetAnimationPosition(Vector2 StartAnchoredPos, Vector2 EndAnchoredPos, AnimationCurve EntryTween,
+        AnimationCurve ExitTween)
     {
         currentAnimationGoing.SetAnimationPos(StartAnchoredPos, EndAnchoredPos, EntryTween, ExitTween, rectTransform);
     }
 
-    public void SetAnimationScale(Vector3 StartAnchoredScale, Vector3 EndAnchoredScale, AnimationCurve EntryTween, AnimationCurve ExitTween)
+    public void SetAnimationScale(Vector3 StartAnchoredScale, Vector3 EndAnchoredScale, AnimationCurve EntryTween,
+        AnimationCurve ExitTween)
     {
         currentAnimationGoing.SetAnimationScale(StartAnchoredScale, EndAnchoredScale, EntryTween, ExitTween);
     }
 
-    public void SetAnimationRotation(Vector3 StartAnchoredEulerAng, Vector3 EndAnchoredEulerAng, AnimationCurve EntryTween, AnimationCurve ExitTween)
+    public void SetAnimationRotation(Vector3 StartAnchoredEulerAng, Vector3 EndAnchoredEulerAng,
+        AnimationCurve EntryTween, AnimationCurve ExitTween)
     {
         currentAnimationGoing.SetAnimationRotation(StartAnchoredEulerAng, EndAnchoredEulerAng, EntryTween, ExitTween);
     }
@@ -137,13 +140,9 @@ public class EasyTween : MonoBehaviour
     private void TriggerOpenClose()
     {
         if (!currentAnimationGoing.IsObjectOpened())
-        {
             currentAnimationGoing.PlayOpenAnimations();
-        }
         else
-        {			
             currentAnimationGoing.PlayCloseAnimations();
-        }
     }
 
     private void CheckTriggerEndState(bool disable, AnimationParts part)
@@ -157,21 +156,15 @@ public class EasyTween : MonoBehaviour
         }
         else
         {
-            if (gameObject && !rectTransform.gameObject == gameObject)
-            {
-                Destroy(gameObject);
-            }
-			
+            if (gameObject && !rectTransform.gameObject == gameObject) Destroy(gameObject);
+
             DestroyImmediate(rectTransform.gameObject);
         }
     }
 
     private void CheckIfCurrenAnimationGoingExits()
     {
-        if (currentAnimationGoing == null)
-        {
-            SetAnimationProperties(this.animationParts);
-        }
+        if (currentAnimationGoing == null) SetAnimationProperties(animationParts);
     }
 
     #endregion

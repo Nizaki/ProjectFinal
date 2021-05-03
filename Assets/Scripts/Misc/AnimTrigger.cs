@@ -4,9 +4,10 @@ using UnityEngine;
 
 public class AnimTrigger : MonoBehaviour
 {
-  public Player player;
-  public void trigger()
-  {
-    player.DoDamage();
-  }
+    public Player player;
+
+    public void trigger()
+    {
+        player.DoDamage();
+    }
 }

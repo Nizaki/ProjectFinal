@@ -5,33 +5,18 @@ using UnityEngine;
 [System.Serializable]
 public class ItemStack
 {
-  public ItemObject Item;
-  public string name
-  {
-    get { return Item.itemName; }
-  }
-  public Sprite sprite
-  {
-    get { return Item.sprite; }
-  }
-  public ItemType type
-  {
-    get
+    public ItemObject Item;
+    public string name => Item.itemName;
+
+    public Sprite sprite => Item.sprite;
+    public ItemType type => Item.type;
+
+    public float data => Item.data;
+    public int count = 0;
+
+    public void clear()
     {
-      return Item.type;
+        Item = null;
+        count = 0;
     }
-  }
-
-  public float data
-  {
-    get { return Item.data; }
-  }
-  public int count = 0;
-
-  public void clear()
-  {
-    Item = null;
-    count = 0;
-  }
 }
-

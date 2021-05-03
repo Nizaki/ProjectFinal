@@ -18,9 +18,8 @@ namespace UITween
             START,
             ENDED,
             FINALENDED,
-            COUNT}
-
-        ;
+            COUNT
+        };
 
         private States AnimationStates = States.AWAKE;
 
@@ -35,36 +34,22 @@ namespace UITween
                 return;
 
             if (counterTween <= 1f) // Max value is 1f
-            {
                 SetAnimationOnFrame(rectTransform, counterTween);
-            }
         }
 
         public void SetAnimationOnFrame(RectTransform rectTransform, float percentage)
         {
             // Position Animation
-            if (animationPart.PositionPropetiesAnim.IsPositionEnabled())
-            {
-                MoveAnimation(rectTransform, percentage);
-            }
-			
+            if (animationPart.PositionPropetiesAnim.IsPositionEnabled()) MoveAnimation(rectTransform, percentage);
+
             // Rotation Animation
-            if (animationPart.RotationPropetiesAnim.IsRotationEnabled())
-            {
-                RotateAnimation(rectTransform, percentage);
-            }
-			
+            if (animationPart.RotationPropetiesAnim.IsRotationEnabled()) RotateAnimation(rectTransform, percentage);
+
             // Scale Animation
-            if (animationPart.ScalePropetiesAnim.IsScaleEnabled())
-            {
-                ScaleAnimation(rectTransform, percentage);
-            }
-			
+            if (animationPart.ScalePropetiesAnim.IsScaleEnabled()) ScaleAnimation(rectTransform, percentage);
+
             // Fade Animation
-            if (animationPart.FadePropetiesAnim.IsFadeEnabled())
-            {
-                SetAlphaValue(rectTransform.transform, percentage);
-            }
+            if (animationPart.FadePropetiesAnim.IsFadeEnabled()) SetAlphaValue(rectTransform.transform, percentage);
         }
 
         public void LateAnimationFrame(RectTransform rectTransform)
@@ -74,7 +59,7 @@ namespace UITween
 
             if (counterTween <= 1f) // Max value is 1f
             {
-                float deltaTime = (animationPart.UnscaledTimeAnimation) ? Time.unscaledDeltaTime : Time.deltaTime;
+                var deltaTime = animationPart.UnscaledTimeAnimation ? Time.unscaledDeltaTime : Time.deltaTime;
 
                 counterTween += deltaTime / animationPart.GetAnimationDuration();
             }
@@ -100,14 +85,12 @@ namespace UITween
             }
 
             if (counterTween > .9f && !animationPart.AtomicAnimation)
-            {
                 if (AnimationStates != States.ENDED
                     && AnimationStates != States.FINALENDED)
                 {
                     animationPart.Ended();
                     AnimationStates = States.ENDED;
                 }
-            }
 
             animationPart.FrameCheck();
         }
@@ -116,34 +99,26 @@ namespace UITween
         {
             // Open Pos Anim
             if (animationPart.PositionPropetiesAnim.IsPositionEnabled())
-            {
                 SetCurrentAnimPos(animationPart.PositionPropetiesAnim.TweenCurveEnterPos,
                     animationPart.PositionPropetiesAnim.StartPos,
                     animationPart.PositionPropetiesAnim.EndPos);
-            }
 
             // Open Rot Anim
             if (animationPart.RotationPropetiesAnim.IsRotationEnabled())
-            {
                 SetCurrentAnimRot(animationPart.RotationPropetiesAnim.TweenCurveEnterRot,
                     animationPart.RotationPropetiesAnim.StartRot,
                     animationPart.RotationPropetiesAnim.EndRot);
-            }
 
             // Open scale Anim
             if (animationPart.ScalePropetiesAnim.IsScaleEnabled())
-            {
                 SetCurrentAnimScale(animationPart.ScalePropetiesAnim.TweenCurveEnterScale,
                     animationPart.ScalePropetiesAnim.StartScale,
                     animationPart.ScalePropetiesAnim.EndScale);
-            }
 
             // Open Fade Anim
             if (animationPart.FadePropetiesAnim.IsFadeEnabled())
-            {
-                SetFadeAnimation(animationPart.FadePropetiesAnim.GetStartFadeValue(), 
+                SetFadeAnimation(animationPart.FadePropetiesAnim.GetStartFadeValue(),
                     animationPart.FadePropetiesAnim.GetEndFadeValue());
-            }
 
             counterTween = 0f;
 
@@ -162,34 +137,26 @@ namespace UITween
         {
             // Close Pos Anim
             if (animationPart.PositionPropetiesAnim.IsPositionEnabled())
-            {
                 SetCurrentAnimPos(animationPart.PositionPropetiesAnim.TweenCurveExitPos,
                     animationPart.PositionPropetiesAnim.EndPos,
                     animationPart.PositionPropetiesAnim.StartPos);
-            }
 
             // Close Rot Anim
             if (animationPart.RotationPropetiesAnim.IsRotationEnabled())
-            {
                 SetCurrentAnimRot(animationPart.RotationPropetiesAnim.TweenCurveExitRot,
                     animationPart.RotationPropetiesAnim.EndRot,
                     animationPart.RotationPropetiesAnim.StartRot);
-            }
 
             // Close Scale Anim
             if (animationPart.ScalePropetiesAnim.IsScaleEnabled())
-            {
                 SetCurrentAnimScale(animationPart.ScalePropetiesAnim.TweenCurveExitScale,
                     animationPart.ScalePropetiesAnim.EndScale,
                     animationPart.ScalePropetiesAnim.StartScale);
-            }
 
             // Close Fade Anim
             if (animationPart.FadePropetiesAnim.IsFadeEnabled())
-            {
-                SetFadeAnimation(animationPart.FadePropetiesAnim.GetEndFadeValue(), 
+                SetFadeAnimation(animationPart.FadePropetiesAnim.GetEndFadeValue(),
                     animationPart.FadePropetiesAnim.GetStartFadeValue());
-            }
 
             counterTween = 0f;
 
@@ -199,7 +166,8 @@ namespace UITween
             animationPart.CheckCallbackStatus();
         }
 
-        public void SetAnimationPos(Vector2 StartAnchoredPos, Vector2 EndAnchoredPos, AnimationCurve EntryTween, AnimationCurve ExitTween, RectTransform rectTransform)
+        public void SetAnimationPos(Vector2 StartAnchoredPos, Vector2 EndAnchoredPos, AnimationCurve EntryTween,
+            AnimationCurve ExitTween, RectTransform rectTransform)
         {
             animationPart.PositionPropetiesAnim.SetPositionEnable(true);
             animationPart.PositionPropetiesAnim.SetPosStart(StartAnchoredPos, rectTransform);
@@ -207,7 +175,8 @@ namespace UITween
             animationPart.PositionPropetiesAnim.SetAniamtionsCurve(EntryTween, ExitTween);
         }
 
-        public void SetAnimationScale(Vector2 StartAnchoredScale, Vector2 EndAnchoredScale, AnimationCurve EntryTween, AnimationCurve ExitTween)
+        public void SetAnimationScale(Vector2 StartAnchoredScale, Vector2 EndAnchoredScale, AnimationCurve EntryTween,
+            AnimationCurve ExitTween)
         {
             animationPart.ScalePropetiesAnim.StartScale = StartAnchoredScale;
             animationPart.ScalePropetiesAnim.SetScaleEnable(true);
@@ -215,7 +184,8 @@ namespace UITween
             animationPart.ScalePropetiesAnim.SetAniamtionsCurve(EntryTween, ExitTween);
         }
 
-        public void SetAnimationRotation(Vector2 StartAnchoredEulerAng, Vector2 EndAnchoredEulerAng, AnimationCurve EntryTween, AnimationCurve ExitTween)
+        public void SetAnimationRotation(Vector2 StartAnchoredEulerAng, Vector2 EndAnchoredEulerAng,
+            AnimationCurve EntryTween, AnimationCurve ExitTween)
         {
             animationPart.RotationPropetiesAnim.SetRotationEnable(true);
             animationPart.RotationPropetiesAnim.StartRot = StartAnchoredEulerAng;
@@ -255,7 +225,8 @@ namespace UITween
         private Vector3 currentStartPos;
         private Vector3 currentEndPos;
 
-        public void SetCurrentAnimPos(AnimationCurve currentAnimationCurvePos, Vector3 currentStartPos, Vector3 currentEndPos)
+        public void SetCurrentAnimPos(AnimationCurve currentAnimationCurvePos, Vector3 currentStartPos,
+            Vector3 currentEndPos)
         {
             this.currentAnimationCurvePos = currentAnimationCurvePos;
             this.currentStartPos = currentStartPos;
@@ -264,10 +235,10 @@ namespace UITween
 
         public void MoveAnimation(RectTransform _rectTransform, float _counterTween)
         {
-            float evaluatedValue = currentAnimationCurvePos.Evaluate(_counterTween);
-            Vector3 valueAdded = (currentEndPos - currentStartPos) * evaluatedValue;
+            var evaluatedValue = currentAnimationCurvePos.Evaluate(_counterTween);
+            var valueAdded = (currentEndPos - currentStartPos) * evaluatedValue;
 
-            _rectTransform.anchoredPosition = (Vector2)(currentStartPos + valueAdded);
+            _rectTransform.anchoredPosition = (Vector2) (currentStartPos + valueAdded);
         }
 
         #endregion
@@ -278,7 +249,8 @@ namespace UITween
         private Vector3 currentStartScale;
         private Vector3 currentEndScale;
 
-        public void SetCurrentAnimScale(AnimationCurve currentAnimationCurveScale, Vector3 currentStartScale, Vector3 currentEndScale)
+        public void SetCurrentAnimScale(AnimationCurve currentAnimationCurveScale, Vector3 currentStartScale,
+            Vector3 currentEndScale)
         {
             this.currentAnimationCurveScale = currentAnimationCurveScale;
             this.currentStartScale = currentStartScale;
@@ -287,8 +259,8 @@ namespace UITween
 
         public void ScaleAnimation(RectTransform _rectTransform, float _counterTween)
         {
-            float evaluatedValue = currentAnimationCurveScale.Evaluate(_counterTween);
-            Vector3 valueAdded = (currentEndScale - currentStartScale) * evaluatedValue;
+            var evaluatedValue = currentAnimationCurveScale.Evaluate(_counterTween);
+            var valueAdded = (currentEndScale - currentStartScale) * evaluatedValue;
 
             _rectTransform.localScale = currentStartScale + valueAdded;
         }
@@ -301,7 +273,8 @@ namespace UITween
         private Vector3 currentStartRot;
         private Vector3 currentEndRot;
 
-        public void SetCurrentAnimRot(AnimationCurve currentAnimationCurveRot, Vector3 currentStartRot, Vector3 currentEndRot)
+        public void SetCurrentAnimRot(AnimationCurve currentAnimationCurveRot, Vector3 currentStartRot,
+            Vector3 currentEndRot)
         {
             this.currentAnimationCurveRot = currentAnimationCurveRot;
             this.currentStartRot = currentStartRot;
@@ -310,8 +283,8 @@ namespace UITween
 
         public void RotateAnimation(RectTransform _rectTransform, float _counterTween)
         {
-            float evaluatedValue = currentAnimationCurveRot.Evaluate(_counterTween);
-            Vector3 valueAdded = (currentEndRot - currentStartRot) * evaluatedValue;
+            var evaluatedValue = currentAnimationCurveRot.Evaluate(_counterTween);
+            var valueAdded = (currentEndRot - currentStartRot) * evaluatedValue;
 
             _rectTransform.localEulerAngles = currentStartRot + valueAdded;
         }
@@ -333,9 +306,9 @@ namespace UITween
         {
             if (_objectToSetAlpha.GetComponent<MaskableGraphic>())
             {
-                MaskableGraphic GraphicElement = _objectToSetAlpha.GetComponent<MaskableGraphic>();
+                var GraphicElement = _objectToSetAlpha.GetComponent<MaskableGraphic>();
 
-                Color objectColor = GraphicElement.color;
+                var objectColor = GraphicElement.color;
 
                 _counterTween = Mathf.Clamp(_counterTween, 0f, 1f);
 
@@ -344,18 +317,15 @@ namespace UITween
             }
 
             if (_objectToSetAlpha.childCount > 0)
-            {
-                for (int i = 0; i < _objectToSetAlpha.childCount; i++)
+                for (var i = 0; i < _objectToSetAlpha.childCount; i++)
                 {
-                    Transform childNumber = _objectToSetAlpha.GetChild(i);
+                    var childNumber = _objectToSetAlpha.GetChild(i);
 
                     if (childNumber.gameObject.activeSelf &&
-                        (!childNumber.GetComponent<ReferencedFrom>() || animationPart.FadePropetiesAnim.IsFadeOverrideEnabled()))
-                    {
+                        (!childNumber.GetComponent<ReferencedFrom>() ||
+                         animationPart.FadePropetiesAnim.IsFadeOverrideEnabled()))
                         SetAlphaValue(childNumber, _counterTween);
-                    }
                 }
-            }
         }
 
         #endregion
@@ -366,9 +336,7 @@ namespace UITween
     {
         #region PositionEditor
 
-        [SerializeField]
-        [HideInInspector]
-        private bool positionEnabled;
+        [SerializeField] [HideInInspector] private bool positionEnabled;
 
         public void SetPositionEnable(bool enabled)
         {
@@ -380,32 +348,26 @@ namespace UITween
             return positionEnabled;
         }
 
-        [HideInInspector]
-        public AnimationCurve TweenCurveEnterPos;
-        [HideInInspector]
-        public AnimationCurve TweenCurveExitPos;
-        [HideInInspector]
-        public Vector3 StartPos;
-        [HideInInspector]
-        public Vector3 EndPos;
-        #if UNITY_EDITOR
-        [SerializeField] [HideInInspector]
-        public Vector3 StartWorldPos;
-        [SerializeField] [HideInInspector]
-        public Vector3 EndWorldPos;
-        #endif
+        [HideInInspector] public AnimationCurve TweenCurveEnterPos;
+        [HideInInspector] public AnimationCurve TweenCurveExitPos;
+        [HideInInspector] public Vector3 StartPos;
+        [HideInInspector] public Vector3 EndPos;
+#if UNITY_EDITOR
+        [SerializeField] [HideInInspector] public Vector3 StartWorldPos;
+        [SerializeField] [HideInInspector] public Vector3 EndWorldPos;
+#endif
 
         public void SetPosStart(Vector3 StartPos, RectTransform rectTr)
         {
             this.StartPos = StartPos;
 #if UNITY_EDITOR
-            float xMes = (rectTr.anchorMin.x + rectTr.anchorMax.x) / 2f;
-            float yMes = (rectTr.anchorMin.y + rectTr.anchorMax.y) / 2f;
-			
-            Transform rootObject = rectTr.root;
-			
-            Rect rectangleScreen = rootObject.GetComponent<RectTransform>().rect;
-			
+            var xMes = (rectTr.anchorMin.x + rectTr.anchorMax.x) / 2f;
+            var yMes = (rectTr.anchorMin.y + rectTr.anchorMax.y) / 2f;
+
+            var rootObject = rectTr.root;
+
+            var rectangleScreen = rootObject.GetComponent<RectTransform>().rect;
+
             StartWorldPos.x = (xMes * rectangleScreen.width + StartPos.x) * rootObject.localScale.x;
             StartWorldPos.y = (yMes * rectangleScreen.height + StartPos.y) * rootObject.localScale.y;
 #endif
@@ -434,9 +396,7 @@ namespace UITween
     {
         #region ScaleEditor
 
-        [SerializeField]
-        [HideInInspector]
-        private bool scaleEnabled;
+        [SerializeField] [HideInInspector] private bool scaleEnabled;
 
         public void SetScaleEnable(bool enabled)
         {
@@ -448,14 +408,10 @@ namespace UITween
             return scaleEnabled;
         }
 
-        [HideInInspector]
-        public AnimationCurve TweenCurveEnterScale;
-        [HideInInspector]
-        public AnimationCurve TweenCurveExitScale;
-        [HideInInspector]
-        public Vector3 StartScale;
-        [HideInInspector]
-        public Vector3 EndScale;
+        [HideInInspector] public AnimationCurve TweenCurveEnterScale;
+        [HideInInspector] public AnimationCurve TweenCurveExitScale;
+        [HideInInspector] public Vector3 StartScale;
+        [HideInInspector] public Vector3 EndScale;
 
         public void SetAniamtionsCurve(AnimationCurve EntryTween, AnimationCurve ExitTween)
         {
@@ -471,9 +427,7 @@ namespace UITween
     {
         #region RotationEditor
 
-        [SerializeField]
-        [HideInInspector]
-        private bool rotationEnabled;
+        [SerializeField] [HideInInspector] private bool rotationEnabled;
 
         public void SetRotationEnable(bool enabled)
         {
@@ -485,14 +439,10 @@ namespace UITween
             return rotationEnabled;
         }
 
-        [HideInInspector]
-        public AnimationCurve TweenCurveEnterRot;
-        [HideInInspector]
-        public AnimationCurve TweenCurveExitRot;
-        [HideInInspector]
-        public Vector3 StartRot;
-        [HideInInspector]
-        public Vector3 EndRot;
+        [HideInInspector] public AnimationCurve TweenCurveEnterRot;
+        [HideInInspector] public AnimationCurve TweenCurveExitRot;
+        [HideInInspector] public Vector3 StartRot;
+        [HideInInspector] public Vector3 EndRot;
 
         public void SetAniamtionsCurve(AnimationCurve EntryTween, AnimationCurve ExitTween)
         {
@@ -508,21 +458,13 @@ namespace UITween
     {
         #region FadeEditor
 
-        [SerializeField]
-        [HideInInspector]
-        private bool fadeInOutEnabled;
+        [SerializeField] [HideInInspector] private bool fadeInOutEnabled;
 
-        [SerializeField]
-        [HideInInspector]
-        private bool fadeOverride;
+        [SerializeField] [HideInInspector] private bool fadeOverride;
 
-        [SerializeField]
-        [HideInInspector]
-        private float startFade = 0f;
+        [SerializeField] [HideInInspector] private float startFade = 0f;
 
-        [SerializeField]
-        [HideInInspector]
-        private float endFade = 1f;
+        [SerializeField] [HideInInspector] private float endFade = 1f;
 
         public void SetFadeEnable(bool enabled)
         {
@@ -535,7 +477,7 @@ namespace UITween
             {
                 Debug.LogError("End Value should be greater than the start value, values not changed");
                 return;
-            } 
+            }
 
             this.startFade = startFade;
             this.endFade = endFade;
@@ -583,35 +525,31 @@ namespace UITween
     [System.Serializable]
     public class AnimationParts : IAniamtionPartProxy
     {
-        public delegate void DisableOrDestroy(bool disable,AnimationParts part);
+        public delegate void DisableOrDestroy(bool disable, AnimationParts part);
 
         public static event DisableOrDestroy OnDisableOrDestroy;
 
         #region PositionEditor
 
-        [HideInInspector]
-        public PositionPropetiesAnim PositionPropetiesAnim = new PositionPropetiesAnim();
+        [HideInInspector] public PositionPropetiesAnim PositionPropetiesAnim = new PositionPropetiesAnim();
 
         #endregion
 
         #region ScaleEditor
 
-        [HideInInspector]
-        public ScalePropetiesAnim ScalePropetiesAnim = new ScalePropetiesAnim();
+        [HideInInspector] public ScalePropetiesAnim ScalePropetiesAnim = new ScalePropetiesAnim();
 
         #endregion
 
         #region RotationEditor
 
-        [HideInInspector]
-        public RotationPropetiesAnim RotationPropetiesAnim = new RotationPropetiesAnim();
+        [HideInInspector] public RotationPropetiesAnim RotationPropetiesAnim = new RotationPropetiesAnim();
 
         #endregion
 
         #region FadeEditor
 
-        [HideInInspector]
-        public FadePropetiesAnim FadePropetiesAnim = new FadePropetiesAnim();
+        [HideInInspector] public FadePropetiesAnim FadePropetiesAnim = new FadePropetiesAnim();
 
         #endregion
 
@@ -637,9 +575,8 @@ namespace UITween
         public enum State
         {
             OPEN,
-            CLOSE}
-
-        ;
+            CLOSE
+        };
 
         public State ObjectState = State.CLOSE;
 
@@ -648,9 +585,8 @@ namespace UITween
         {
             DEACTIVATE,
             DESTROY,
-            NOTHING}
-
-        ;
+            NOTHING
+        };
 
         public EndTweenClose EndState = EndTweenClose.DEACTIVATE;
 
@@ -671,9 +607,8 @@ namespace UITween
             START_INTRO_AND_START_EXIT_END_OF_EXIT_ANIM,
             START_INTRO_AND_START_EXIT_END_OF_INTRO_ANIM,
             START_INTRO_AND_START_EXIT_END_OF_INTRO_AND_END_OF_EXIT_ANIM,
-            NOTHING}
-
-        ;
+            NOTHING
+        };
 
         public CallbackCall CallCallback = CallbackCall.END_OF_INTRO_ANIM;
 
@@ -688,20 +623,19 @@ namespace UITween
         private bool CheckNextFrame = false;
         private bool CallOnThisFrame = false;
 
-        [SerializeField]
-        [HideInInspector]
-        private float animationDuration = 1f;
+        [SerializeField] [HideInInspector] private float animationDuration = 1f;
 
         #endregion
 
         #region PUBLIC_Methods
 
-        public AnimationParts(State ObjectState, bool UnscaledTimeAnimation, bool SaveState, bool AtomicAnim, EndTweenClose EndState, CallbackCall CallCallback, UnityEvent IntroEvents, UnityEvent ExitEvents)
+        public AnimationParts(State ObjectState, bool UnscaledTimeAnimation, bool SaveState, bool AtomicAnim,
+            EndTweenClose EndState, CallbackCall CallCallback, UnityEvent IntroEvents, UnityEvent ExitEvents)
         {
             this.ObjectState = ObjectState;
             this.UnscaledTimeAnimation = UnscaledTimeAnimation;
             this.SaveState = SaveState;
-            this.AtomicAnimation = AtomicAnim;
+            AtomicAnimation = AtomicAnim;
             this.EndState = EndState;
             this.CallCallback = CallCallback;
             this.IntroEvents = IntroEvents;
@@ -713,27 +647,23 @@ namespace UITween
             if (CallCallback != CallbackCall.NOTHING)
             {
                 if ((CallCallback == CallbackCall.START_INTRO_END_OF_EXIT_ANIM
-                    || CallCallback == CallbackCall.START_INTRO_ANIM
-                    || CallCallback == CallbackCall.START_INTRO_END_OF_INTRO_ANIM
-                    || CallCallback == CallbackCall.START_INTRO_END_OF_INTRO_AND_END_OF_EXIT_ANIM
-                    || CallCallback == CallbackCall.START_INTRO_AND_START_EXIT_END_OF_EXIT_ANIM
-                    || CallCallback == CallbackCall.START_INTRO_AND_START_EXIT_END_OF_INTRO_ANIM
-                    || CallCallback == CallbackCall.START_INTRO_AND_START_EXIT_END_OF_INTRO_AND_END_OF_EXIT_ANIM
-                    || CallCallback == CallbackCall.START_EXIT_START_INTRO_ANIM) && ObjectState == State.OPEN)
-                {
+                     || CallCallback == CallbackCall.START_INTRO_ANIM
+                     || CallCallback == CallbackCall.START_INTRO_END_OF_INTRO_ANIM
+                     || CallCallback == CallbackCall.START_INTRO_END_OF_INTRO_AND_END_OF_EXIT_ANIM
+                     || CallCallback == CallbackCall.START_INTRO_AND_START_EXIT_END_OF_EXIT_ANIM
+                     || CallCallback == CallbackCall.START_INTRO_AND_START_EXIT_END_OF_INTRO_ANIM
+                     || CallCallback == CallbackCall.START_INTRO_AND_START_EXIT_END_OF_INTRO_AND_END_OF_EXIT_ANIM
+                     || CallCallback == CallbackCall.START_EXIT_START_INTRO_ANIM) && ObjectState == State.OPEN)
                     CheckCallBack(IntroEvents);
-                }
                 else if ((CallCallback == CallbackCall.START_EXIT_END_OF_EXIT_ANIM
-                         || CallCallback == CallbackCall.START_EXIT_ANIM
-                         || CallCallback == CallbackCall.START_EXIT_END_OF_INTRO_ANIM
-                         || CallCallback == CallbackCall.START_EXIT_END_OF_INTRO_AND_END_OF_EXIT_ANIM
-                         || CallCallback == CallbackCall.START_INTRO_AND_START_EXIT_END_OF_EXIT_ANIM
-                         || CallCallback == CallbackCall.START_INTRO_AND_START_EXIT_END_OF_INTRO_ANIM
-                         || CallCallback == CallbackCall.START_INTRO_AND_START_EXIT_END_OF_INTRO_AND_END_OF_EXIT_ANIM
-                         || CallCallback == CallbackCall.START_EXIT_START_INTRO_ANIM) && ObjectState == State.CLOSE)
-                {
+                          || CallCallback == CallbackCall.START_EXIT_ANIM
+                          || CallCallback == CallbackCall.START_EXIT_END_OF_INTRO_ANIM
+                          || CallCallback == CallbackCall.START_EXIT_END_OF_INTRO_AND_END_OF_EXIT_ANIM
+                          || CallCallback == CallbackCall.START_INTRO_AND_START_EXIT_END_OF_EXIT_ANIM
+                          || CallCallback == CallbackCall.START_INTRO_AND_START_EXIT_END_OF_INTRO_ANIM
+                          || CallCallback == CallbackCall.START_INTRO_AND_START_EXIT_END_OF_INTRO_AND_END_OF_EXIT_ANIM
+                          || CallCallback == CallbackCall.START_EXIT_START_INTRO_ANIM) && ObjectState == State.CLOSE)
                     CheckCallBack(ExitEvents);
-                }
             }
         }
 
@@ -743,24 +673,15 @@ namespace UITween
             {
                 if (EndState == EndTweenClose.DEACTIVATE)
                 {
-                    if (OnDisableOrDestroy != null)
-                    {
-                        OnDisableOrDestroy(true, this);
-                    }
+                    if (OnDisableOrDestroy != null) OnDisableOrDestroy(true, this);
                 }
                 else if (EndState == EndTweenClose.DESTROY)
                 {
-                    if (OnDisableOrDestroy != null)
-                    {
-                        OnDisableOrDestroy(false, this);
-                    }
+                    if (OnDisableOrDestroy != null) OnDisableOrDestroy(false, this);
                 }
             }
 
-            if (SaveState)
-            {
-                ObjectState = (ObjectState == State.OPEN) ? State.CLOSE : State.OPEN;
-            }		
+            if (SaveState) ObjectState = ObjectState == State.OPEN ? State.CLOSE : State.OPEN;
         }
 
         public void Ended()
@@ -768,7 +689,6 @@ namespace UITween
             if (CallCallback != CallbackCall.NOTHING)
             {
                 if (ObjectState == State.CLOSE)
-                {
                     if (CallCallback == CallbackCall.END_OF_EXIT_ANIM
                         || CallCallback == CallbackCall.END_OF_INTRO_AND_END_OF_EXIT_ANIM
                         || CallCallback == CallbackCall.START_INTRO_END_OF_EXIT_ANIM
@@ -777,22 +697,18 @@ namespace UITween
                         || CallCallback == CallbackCall.START_EXIT_END_OF_INTRO_AND_END_OF_EXIT_ANIM
                         || CallCallback == CallbackCall.START_INTRO_AND_START_EXIT_END_OF_EXIT_ANIM
                         || CallCallback == CallbackCall.START_INTRO_AND_START_EXIT_END_OF_INTRO_AND_END_OF_EXIT_ANIM)
-                    {
                         CheckCallBack(ExitEvents);
-                    }                
-                }
 
                 if ((CallCallback == CallbackCall.END_OF_INTRO_ANIM
-                    || CallCallback == CallbackCall.END_OF_INTRO_AND_END_OF_EXIT_ANIM
-                    || CallCallback == CallbackCall.START_INTRO_END_OF_INTRO_ANIM
-                    || CallCallback == CallbackCall.START_INTRO_END_OF_INTRO_AND_END_OF_EXIT_ANIM
-                    || CallCallback == CallbackCall.START_EXIT_END_OF_INTRO_ANIM
-                    || CallCallback == CallbackCall.START_EXIT_END_OF_INTRO_AND_END_OF_EXIT_ANIM
-                    || CallCallback == CallbackCall.START_INTRO_AND_START_EXIT_END_OF_INTRO_ANIM
-                    || CallCallback == CallbackCall.START_INTRO_AND_START_EXIT_END_OF_INTRO_AND_END_OF_EXIT_ANIM) && ObjectState == State.OPEN)
-                {
+                     || CallCallback == CallbackCall.END_OF_INTRO_AND_END_OF_EXIT_ANIM
+                     || CallCallback == CallbackCall.START_INTRO_END_OF_INTRO_ANIM
+                     || CallCallback == CallbackCall.START_INTRO_END_OF_INTRO_AND_END_OF_EXIT_ANIM
+                     || CallCallback == CallbackCall.START_EXIT_END_OF_INTRO_ANIM
+                     || CallCallback == CallbackCall.START_EXIT_END_OF_INTRO_AND_END_OF_EXIT_ANIM
+                     || CallCallback == CallbackCall.START_INTRO_AND_START_EXIT_END_OF_INTRO_ANIM
+                     || CallCallback == CallbackCall.START_INTRO_AND_START_EXIT_END_OF_INTRO_AND_END_OF_EXIT_ANIM) &&
+                    ObjectState == State.OPEN)
                     CheckCallBack(IntroEvents);
-                }       
             }
         }
 
@@ -800,10 +716,7 @@ namespace UITween
         {
             if (CheckNextFrame)
             {
-                if (CallOnThisFrame)
-                {
-                    CallCallbackObjects();
-                }
+                if (CallOnThisFrame) CallCallbackObjects();
 
                 CallOnThisFrame = !CallOnThisFrame;
             }
@@ -811,10 +724,7 @@ namespace UITween
 
         public bool IsObjectOpened()
         {
-            if (ObjectState == State.CLOSE)
-            {
-                return false;
-            }
+            if (ObjectState == State.CLOSE) return false;
 
             return true;
         }
@@ -822,25 +732,17 @@ namespace UITween
         public void ChangeStatus()
         {
             if (ObjectState == State.CLOSE)
-            {
                 ObjectState = State.OPEN;
-            }
             else
-            {
                 ObjectState = State.CLOSE;
-            }
         }
 
         public void SetStatus(bool open)
         {
             if (open)
-            {
                 ObjectState = State.OPEN;
-            }
             else
-            {
                 ObjectState = State.CLOSE;
-            }
         }
 
         #endregion
@@ -849,15 +751,15 @@ namespace UITween
 
         private void CheckCallBack(UnityEvent CallbackObject)
         {
-            this.CallBackObject = CallbackObject;
-            CheckNextFrame = !CheckNextFrame;        
+            CallBackObject = CallbackObject;
+            CheckNextFrame = !CheckNextFrame;
         }
 
         private void CallCallbackObjects()
-        {           
+        {
             CheckNextFrame = !CheckNextFrame;
 
-            CallBackObject.Invoke();     
+            CallBackObject.Invoke();
         }
 
         #endregion

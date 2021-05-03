@@ -4,5 +4,5 @@ using UnityEngine;
 
 public interface IDamagable
 {
-    public abstract void TakeDamage(int damage,EquipType sourceEquip = EquipType.None);
+    public abstract void TakeDamage(int damage, EquipType sourceEquip = EquipType.None);
 }

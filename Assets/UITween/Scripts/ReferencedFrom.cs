@@ -2,4 +2,6 @@
 using System.Collections;
 using UITween;
 
-public class ReferencedFrom : MonoBehaviour { }
+public class ReferencedFrom : MonoBehaviour
+{
+}

@@ -4,13 +4,13 @@ using UnityEngine;
 using UnityEngine.UI;
 using UnityEngine.EventSystems;
 using TMPro;
+
 public class ItemSlot : MonoBehaviour, IPointerEnterHandler, IPointerExitHandler
 {
-    [SerializeField]
-    Image image;
-    [SerializeField]
-    TextMeshProUGUI text;
-    ItemObject currentItem;
+    [SerializeField] private Image image;
+    [SerializeField] private TextMeshProUGUI text;
+    private ItemObject currentItem;
+
     public void UpdateSlot(ItemStack item)
     {
         image.color = new Color(255, 255, 255, 255);
@@ -18,6 +18,7 @@ public class ItemSlot : MonoBehaviour, IPointerEnterHandler, IPointerExitHandler
         text.text = item.count.ToString();
         currentItem = item.Item;
     }
+
     public void Clear()
     {
         image.color = new Color(255, 255, 255, 0);
@@ -29,13 +30,9 @@ public class ItemSlot : MonoBehaviour, IPointerEnterHandler, IPointerExitHandler
     public void OnPointerEnter(PointerEventData eventData)
     {
         if (currentItem != null)
-        {
             TooltipsScreenSpace.ShowTooltip(currentItem.itemName);
-        }
         else
-        {
             TooltipsScreenSpace.HideTooltip();
-        }
     }
 
     public void OnPointerExit(PointerEventData eventData)

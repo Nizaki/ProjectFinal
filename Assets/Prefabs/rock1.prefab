@@ -233,5 +233,5 @@ MonoBehaviour:
       count: 1
   attackDelay: 5
   customeDropLocation: {fileID: 0}
-  hit: {fileID: 8300000, guid: 9b352cbd01fcb614c99709c20977eea9, type: 3}
+  hitSound: {fileID: 8300000, guid: 9b352cbd01fcb614c99709c20977eea9, type: 3}
   die: {fileID: 0}

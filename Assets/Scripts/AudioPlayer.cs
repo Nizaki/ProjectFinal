@@ -4,32 +4,34 @@ using UnityEngine;
 
 public class AudioPlayer : MonoBehaviour
 {
-  public static AudioPlayer Instance { get { return _instance; } }
-  private static AudioPlayer _instance;
+    public static AudioPlayer Instance => _instance;
+    private static AudioPlayer _instance;
 
-  AudioSource source;
+    private AudioSource source;
 
-  void Awake()
-  {
-    if (_instance != null && _instance != this)
+    private void Awake()
     {
-      Destroy(this.gameObject);
-      return;
+        if (_instance != null && _instance != this)
+        {
+            Destroy(gameObject);
+            return;
+        }
+
+        if (_instance == null)
+        {
+            _instance = this;
+            DontDestroyOnLoad(this);
+        }
     }
-    if (_instance == null)
+
+    // Start is called before the first frame update
+    private void Start()
     {
-      _instance = this;
+        source = GetComponent<AudioSource>();
     }
-  }
 
-  // Start is called before the first frame update
-  void Start()
-  {
-    source = GetComponent<AudioSource>();
-  }
-
-  public void play(AudioClip clip)
-  {
-    source.PlayOneShot(clip);
-  }
+    public void Play(AudioClip clip)
+    {
+        source.PlayOneShot(clip);
+    }
 }

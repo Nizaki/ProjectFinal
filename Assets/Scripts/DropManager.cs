@@ -4,46 +4,41 @@ using UnityEngine;
 
 public class DropManager : MonoBehaviour
 {
-  public static DropManager Instance { get; private set; }
+    public static DropManager Instance { get; private set; }
 
-  [SerializeField]
-  private GameObject dropTemplate;
+    [SerializeField] private GameObject dropTemplate;
 
-  private void Awake()
-  {
-    if (Instance != null && Instance != this)
+    private void Awake()
     {
-      Destroy(gameObject);
-      return;
+        if (Instance != null && Instance != this)
+        {
+            Destroy(gameObject);
+            return;
+        }
+
+        if (Instance == null) Instance = this;
     }
-    if (Instance == null)
+
+    public static void RandomDrop(IEnumerable<ChanceItem> drop, Vector2 pos)
     {
-      Instance = this;
+        foreach (var item in drop)
+        {
+            Debug.Log(item.item.name);
+            Instance.RandomDrop(item, pos);
+        }
     }
-  }
 
-  public static void RandomDrop(IEnumerable<ChanceItem> drop, Vector2 pos)
-  {
-    foreach (var item in drop)
+    private void RandomDrop(ChanceItem drop, Vector2 pos)
     {
-      Instance.RandomDrop(item, pos);
+        if (drop.chance <= Random.Range(0, 100)) return;
+        var obj = Instantiate(dropTemplate, pos, Quaternion.identity);
+        obj.GetComponent<DropItem>().item = drop.item.Item;
     }
-  }
-
-  private void RandomDrop(ChanceItem drop, Vector2 pos)
-  {
-    if (drop.chance <= Random.Range(0, 100)) return;
-    var obj = Instantiate(dropTemplate, pos, Quaternion.identity);
-    obj.GetComponent<DropItem>().item = drop.item.Item;
-  }
-
 }
 
 [System.Serializable]
 public class ChanceItem
 {
-  [SerializeField, Range(0, 100)]
-  public int chance;
-  [SerializeField]
-  public ItemStack item;
+    [SerializeField] [Range(0, 100)] public int chance;
+    [SerializeField] public ItemStack item;
 }
