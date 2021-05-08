@@ -38,12 +38,12 @@ public class CampFire : MonoBehaviour, IPointerClickHandler
     private void OnTriggerEnter2D(Collider2D collision)
     {
         //TODO:Make player Immune to darkness
-        if (collision.CompareTag("Player")) collision.GetComponent<Player>().UnderLight = true;
+        if (collision.CompareTag("Player")) collision.GetComponent<Player>().underLight = true;
     }
 
     private void OnTriggerExit2D(Collider2D collision)
     {
-        if (collision.CompareTag("Player")) collision.GetComponent<Player>().UnderLight = false;
+        if (collision.CompareTag("Player")) collision.GetComponent<Player>().underLight = false;
     }
 
     public void OnPointerClick(PointerEventData eventData)

@@ -23,9 +23,7 @@ public class HitFlash : MonoBehaviour
 
     private IEnumerator flash()
     {
-        tween.OpenCloseObjectAnimation();
         yield return new WaitForSeconds(0.25f);
-        tween.OpenCloseObjectAnimation();
     }
 
     private void OnDestroy()

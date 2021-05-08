@@ -17,9 +17,9 @@ public class UiPlayer : MonoBehaviour
 
     private void LateUpdate()
     {
-        HpBar.value = (float) player.Hp / (float) player.MaxHP;
-        HungerBar.value = player.Hunger / player.MaxHunger;
-        WaterBar.value = player.Water / player.MaxWater;
+        HpBar.value = (float) player.hp / (float) player.maxHp;
+        HungerBar.value = player.hunger / player.maxHunger;
+        WaterBar.value = player.water / player.maxWater;
         LightBar.value = player.darkDelay / player.maxDarkDelay;
     }
 }

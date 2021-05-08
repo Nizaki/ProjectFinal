@@ -2,18 +2,18 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using MyBox;
+using UnityEngine.Events;
 
-[RequireComponent(typeof(AudioSource))]
 public class InterObject : MonoBehaviour, IDamagable
 {
     private bool alive = true;
-    public float Hp = 10;
-    public float MaxHP = 10;
-    public EquipType EffectiveType = EquipType.None;
+    public float hp = 10;
+    public float maxHp = 10;
+    public EquipType effectiveType = EquipType.None;
     public bool hasAI = true;
 
     [ConditionalField("hasAI")] public AI ai = AI.Idle;
-    [ConditionalField("hasAI")] public float FollowDistance = 5f;
+    [ConditionalField("hasAI")] public float followDistance = 5f;
     [ConditionalField("hasAI")] public float attackRange = 5f;
     [SerializeField] public List<ChanceItem> DropList;
 
@@ -22,45 +22,44 @@ public class InterObject : MonoBehaviour, IDamagable
     private bool moving = false;
     [ConditionalField("hasAI")] public float attackDelay = 5f;
 
-    private float currectAttackDelay = 0f;
-    [SerializeField] private Transform customeDropLocation;
+    private float currentAttackDelay = 0f;
+    [SerializeField] private Transform customDropLocation;
     public AudioClip hitSound, die;
     private AudioSource source;
 
+    public UnityEvent onDie;
+    
     public virtual void Start()
     {
+        onDie ??= new UnityEvent();
+        
         player = GameObject.FindGameObjectWithTag("Player");
-        Hp = MaxHP;
-        if (attackRange >= FollowDistance)
-            attackRange = FollowDistance / 2f;
+        hp = maxHp;
+        if (attackRange >= followDistance)
+            attackRange = followDistance / 2f;
         StartCoroutine(nameof(AiSquence));
         source = GetComponent<AudioSource>();
         if (!hasAI)
         {
-            FollowDistance = 0;
+            followDistance = 0;
             attackRange = 0;
         }
     }
 
     public void TakeDamage(int damage, EquipType sourceEquip = EquipType.None)
     {
-        AudioPlayer.Instance.Play(hitSound);
-        if (sourceEquip == EffectiveType)
-            Hp -= 5;
+        AudioPlayer.Instance?.Play(hitSound);
+        if (sourceEquip == effectiveType)
+            hp -= 5;
         else
-            Hp -= 2;
-        Debug.Log($"{name} ({Hp}/{MaxHP})");
-        if (Hp <= 0) Die();
-    }
-
-    private void LateUpdate()
-    {
+            hp -= 2;
+        if (hp <= 0) Die();
     }
 
     private void FixedUpdate()
     {
-        currectAttackDelay -= 1 * Time.fixedDeltaTime;
-        if (currectAttackDelay < 0) currectAttackDelay = 0;
+        currentAttackDelay -= 1 * Time.fixedDeltaTime;
+        if (currentAttackDelay < 0) currentAttackDelay = 0;
         if (moving) transform.position = Vector2.MoveTowards(transform.position, targetPos, 5 * Time.fixedDeltaTime);
     }
 
@@ -72,7 +71,7 @@ public class InterObject : MonoBehaviour, IDamagable
             switch (ai)
             {
                 case AI.Idle:
-                    if (distance < FollowDistance)
+                    if (distance < followDistance)
                     {
                         ai = AI.Follow;
                         targetPos = player.transform.position;
@@ -82,17 +81,17 @@ public class InterObject : MonoBehaviour, IDamagable
                         yield return new WaitForSeconds(Random.Range(1f, 3f));
                         ai = AI.Wander;
                         //random pick location
-                        targetPos = new Vector2(transform.position.x + Random.Range(-5f, 5f),
-                            transform.position.y + Random.Range(-5f, 5f));
+                        var pos = transform.position;
+                        targetPos = new Vector2(pos.x + Random.Range(-5f, 5f),
+                            pos.y + Random.Range(-5f, 5f));
                         moving = true;
                     }
 
                     break;
                 case AI.Wander:
-                    var distance2 = Vector2.Distance(transform.position, targetPos);
                     while (moving)
                     {
-                        distance2 = Vector2.Distance(transform.position, targetPos);
+                        var distance2 = Vector2.Distance(transform.position, targetPos);
                         if (distance2 < 2)
                         {
                             moving = false;
@@ -104,7 +103,7 @@ public class InterObject : MonoBehaviour, IDamagable
 
                     break;
                 case AI.Follow:
-                    if (distance > FollowDistance)
+                    if (distance > followDistance)
                     {
                         moving = false;
                         ai = AI.Idle;
@@ -117,16 +116,15 @@ public class InterObject : MonoBehaviour, IDamagable
                     else
                     {
                         targetPos = player.transform.position;
-                        Debug.Log($"follow player to {targetPos}");
                         moving = true;
                     }
 
                     break;
                 case AI.Attack:
-                    if (currectAttackDelay <= 0)
+                    if (currentAttackDelay <= 0)
                     {
                         player.GetComponent<Player>().TakeDamage(5);
-                        currectAttackDelay = attackDelay;
+                        currentAttackDelay = attackDelay;
                     }
 
                     yield return new WaitForSeconds(0.5f);
@@ -143,7 +141,8 @@ public class InterObject : MonoBehaviour, IDamagable
     private void Die()
     {
         alive = false;
-        DropManager.RandomDrop(DropList, customeDropLocation ? customeDropLocation.position : transform.position);
+        onDie.Invoke();
+        DropManager.RandomDrop(DropList, customDropLocation ? customDropLocation.position : transform.position);
         Destroy(gameObject);
     }
 
@@ -151,10 +150,11 @@ public class InterObject : MonoBehaviour, IDamagable
     {
         if (hasAI)
         {
+            var pos = transform.position;
             Gizmos.color = Color.black;
-            Gizmos.DrawWireSphere(transform.position, FollowDistance);
+            Gizmos.DrawWireSphere(pos, followDistance);
             Gizmos.color = Color.red;
-            Gizmos.DrawWireSphere(transform.position, attackRange);
+            Gizmos.DrawWireSphere(pos, attackRange);
         }
     }
 }

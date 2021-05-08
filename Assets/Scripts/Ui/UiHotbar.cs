@@ -40,9 +40,6 @@ public class UiHotbar : MonoBehaviour
         for (var i = 0; i < selectedImage.Length; i++)
         {
             selectedImage[i].SetActive(i == slot);
-            ;
-            if (i == slot)
-                Debug.Log($"active {slot}");
         }
     }
 

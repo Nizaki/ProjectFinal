@@ -1,5 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
+using DG.Tweening;
 using UnityEngine;
 using UnityEngine.UI;
 using TMPro;
@@ -22,28 +23,10 @@ public class NotiItem : MonoBehaviour
 
     private IEnumerator AnimatedNoti()
     {
-        yield return new WaitForEndOfFrame();
-        var c1 = bg.color;
-        var c2 = label.color;
-        for (float i = 0; i <= 0.8f; i += 0.05f)
-        {
-            c1.a = i;
-            bg.color = c1;
-            c2.a = i * 1.75f > 1 ? 1 : i * 2.0f;
-            label.color = c2;
-            yield return new WaitForSeconds(0.05f);
-        }
-
+        bg.DOFade(1f, 1f);
+        label.DOFade(1f, 1f);
         yield return new WaitForSeconds(3);
-        for (var i = 0.5f; i >= 0f; i -= 0.05f)
-        {
-            c1.a = i;
-            bg.color = c1;
-            c2.a = i * 2.0f;
-            label.color = c2;
-            yield return new WaitForSeconds(0.05f);
-        }
-
-        Destroy(gameObject);
+        bg.DOFade(0, 1f);
+        label.DOFade(0, 1f).OnComplete(() => { Destroy(gameObject);});
     }
 }

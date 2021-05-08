@@ -1,4 +1,5 @@
-﻿using System.Collections;
+﻿using System;
+using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.Events;
@@ -6,23 +7,23 @@ using UnityEngine.Events;
 public class Player : MonoBehaviour
 {
     public bool alive = true;
-    public int Hp = 100;
-    public int MaxHP = 100;
-    public float Hunger = 100f;
-    public float MaxHunger = 100f;
-    public float HungerDrainRate = 0.1f;
-    public float Water = 100f;
-    public float MaxWater = 100f;
-    public float WaterDrainRate = 0.1f;
+    public int hp = 100;
+    public int maxHp = 100;
+    public float hunger = 100f;
+    public float maxHunger = 100f;
+    public float hungerDrainRate = 0.1f;
+    public float water = 100f;
+    public float maxWater = 100f;
+    public float waterDrainRate = 0.1f;
     public float maxDarkDelay = 3;
     [HideInInspector] public UnityEvent onDeath;
     [HideInInspector] public UnityEvent<int> onTakeDamage;
     public float darkDelay = 5;
-    [HideInInspector] public List<GameObject> Interactable = new List<GameObject>();
-    [HideInInspector] public bool UnderLight;
+    [HideInInspector] public List<GameObject> interactable = new List<GameObject>();
+    [HideInInspector] public bool underLight;
 
     private float timer;
-    [SerializeField] private GameObject Holder;
+    [SerializeField] private GameObject holder;
     [SerializeField] private Transform attackPos;
     [SerializeField] private float attackRange;
     public Animator punchAnim;
@@ -30,14 +31,16 @@ public class Player : MonoBehaviour
 
     public PlayerInventory inventory;
 
+    private PlayerUiManager ui;
     // Start is called before the first frame update
     private void Start()
     {
-        Hp = MaxHP;
-        Hunger = MaxHunger;
-        Water = MaxWater;
+        hp = maxHp;
+        hunger = maxHunger;
+        water = maxWater;
         onDeath ??= new UnityEvent();
         onTakeDamage ??= new UnityEvent<int>();
+        ui = GameObject.Find("PlayerUI")?.GetComponent<PlayerUiManager>();
     }
 
     // Update is called once per frame
@@ -53,18 +56,21 @@ public class Player : MonoBehaviour
         foreach (var item in ray)
         {
             var citem = item.GetComponent<DropItem>();
-            if (citem != null)
-            {
-                inventory.AddItem(citem.item);
-                Notification.ShowNotification($"ได้รับ {citem.item.name} 1 ชิ้น");
-                Destroy(item.gameObject);
-            }
+            if (citem == null) continue;
+            PickUp(citem.item);
+            Destroy(item.gameObject);
         }
     }
 
+    private void PickUp(ItemObject item)
+    {
+        inventory.AddItem(item);
+        Notification.ShowNotification($"ได้รับ {item.name} 1 ชิ้น");
+    }
+    
     private void UpdateLight()
     {
-        if (UnderLight || GameTime.state == TimeState.Day)
+        if (underLight || GameTime.state == TimeState.Day)
         {
             darkDelay += 0.25f * Time.deltaTime;
             if (darkDelay > maxDarkDelay)
@@ -72,7 +78,7 @@ public class Player : MonoBehaviour
             return;
         }
 
-        if (GameTime.state == TimeState.Night && !UnderLight)
+        if (GameTime.state == TimeState.Night && !underLight)
         {
             darkDelay -= Time.deltaTime;
             if (darkDelay <= 0)
@@ -92,9 +98,9 @@ public class Player : MonoBehaviour
     private void MoveTarget()
     {
         var pos = Camera.main.ScreenToWorldPoint(Input.mousePosition);
-        var dir = pos - Holder.transform.position;
+        var dir = pos - holder.transform.position;
         var angle = Mathf.Atan2(dir.y, dir.x) * Mathf.Rad2Deg;
-        Holder.transform.rotation = Quaternion.AngleAxis(angle, Vector3.forward);
+        holder.transform.rotation = Quaternion.AngleAxis(angle, Vector3.forward);
     }
 
     public void Attack()
@@ -115,17 +121,23 @@ public class Player : MonoBehaviour
 
     public void TakeDamage(int value)
     {
-        Hp -= value;
-        if (Hp <= 0)
-            Debug.Log("ตาย");
+        hp -= value;
+        if (hp <= 0)
+            Die();
 
         onTakeDamage.Invoke(value);
     }
 
+    private void Die()
+    {
+        alive = false;
+        ui.deathPanel.SetActive(true);
+    }
+    
     private void FixedUpdate()
     {
-        Hunger -= HungerDrainRate * Time.fixedDeltaTime;
-        Water -= WaterDrainRate * Time.fixedDeltaTime;
+        hunger -= hungerDrainRate * Time.fixedDeltaTime;
+        water -= waterDrainRate * Time.fixedDeltaTime;
     }
 
     private void OnDrawGizmos()
@@ -135,47 +147,67 @@ public class Player : MonoBehaviour
         Gizmos.color = Color.green;
         Gizmos.DrawWireSphere(transform.position, 1f);
     }
-
-    private GameObject GetClosetInteractable()
-    {
-        GameObject result = null;
-        var minDist = Mathf.Infinity;
-        Vector2 currentPos = transform.position;
-        foreach (var go in Interactable)
-        {
-            var dist = Vector2.Distance(go.transform.position, currentPos);
-            if (dist < minDist)
-            {
-                result = go;
-                minDist = dist;
-            }
-        }
-
-        return result;
-    }
+    
 
     private void OnTriggerEnter2D(Collider2D collision)
     {
-        if (collision.CompareTag("Interactive")) Interactable.Add(collision.gameObject);
+        if (collision.CompareTag("Interactive")) interactable.Add(collision.gameObject);
     }
 
     private void OnTriggerExit2D(Collider2D collision)
     {
-        if (collision.CompareTag("Interactive")) Interactable.Remove(collision.gameObject);
+        if (collision.CompareTag("Interactive")) interactable.Remove(collision.gameObject);
     }
 
     public void Heal(int value)
     {
-        Hp += value;
+        hp += value;
     }
 
     public void Eat(int value)
     {
-        Hunger += value;
+        hunger += value;
     }
 
     public void Drink(int value)
     {
-        Water += value;
+        water += value;
+    }
+
+    public void Use()
+    {
+        var item = inventory.currentItem;
+        var itemType = item.type;
+        switch (itemType)
+        {
+            case ItemType.None:
+                break;
+            case ItemType.Food:
+                Eat(Mathf.RoundToInt(item.data));
+                inventory.RemoveItem(item, 1);
+                break;
+            case ItemType.Water:
+                Drink(Mathf.RoundToInt(item.data));
+                inventory.RemoveItem(item, 1);
+                break;
+            case ItemType.Health:
+                Heal(Mathf.RoundToInt(item.data));
+                inventory.RemoveItem(item, 1);
+                break;
+            case ItemType.Equip:
+                break;
+            case ItemType.Build:
+                //build
+                var worldPos = Camera.main.ScreenToWorldPoint(Input.mousePosition);
+                worldPos.z = 0;
+                if (item.prefab != null)
+                {
+                    Instantiate(item.prefab, worldPos, Quaternion.identity);
+                    inventory.RemoveItem(item, 1);
+                }
+                break;
+            default:
+                throw new ArgumentOutOfRangeException();
+        }
     }
 }

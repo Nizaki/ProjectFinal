@@ -43,6 +43,7 @@ public class PlayerInventory : MonoBehaviour
                 t.count = item.count;
                 onInvUpdate.Invoke();
                 onInventoryUpdate.Invoke(itemList);
+                SelectSlot(selectedSlot);
                 return true;
             }
             else if (t.name == item.name)
@@ -50,9 +51,10 @@ public class PlayerInventory : MonoBehaviour
                 t.count += 1;
                 onInvUpdate.Invoke();
                 onInventoryUpdate.Invoke(itemList);
+                SelectSlot(selectedSlot);
                 return true;
             }
-
+        SelectSlot(selectedSlot);
         return false;
     }
 
@@ -67,53 +69,6 @@ public class PlayerInventory : MonoBehaviour
         selectedSlot = slot;
         onSelectSlot.Invoke(slot);
         currentItem = itemList[selectedSlot].Item;
-        handRender.sprite = currentItem.sprite;
-        Debug.Log(slot);
-        ////if useable use it instead of select
-        //switch (itemList[slot].type)
-        //{
-        //    case ItemType.Food:
-        //        player.Eat(Mathf.FloorToInt(itemList[slot].data));
-        //        Debug.Log("Eat " + itemList[slot].name);
-        //        RemoveItem(itemList[slot].Item, 1);
-        //        break;
-        //    case ItemType.Water:
-        //        player.Drink(Mathf.FloorToInt(itemList[slot].data));
-        //        Debug.Log("Drink " + itemList[slot].name);
-        //        RemoveItem(itemList[slot].Item, 1);
-        //        break;
-        //    case ItemType.Health:
-        //        player.Heal(Mathf.FloorToInt(itemList[slot].data));
-        //        Debug.Log("Use " + itemList[slot].name);
-        //        RemoveItem(itemList[slot].Item, 1);
-        //        break;
-        //    case ItemType.Equip:
-        //        handRender.sprite = itemList[SelectedSlot].Item.sprite;
-        //        break;
-        //    case ItemType.Build:
-        //        handRender.sprite = null;
-        //        break;
-        //    case ItemType.None:
-        //        break;
-        //    default:
-        //        break;
-        //}
-    }
-
-    private void Update()
-    {
-        if (currentItem == null) return;
-        if (currentItem.type != ItemType.Build) return;
-        if (Input.GetMouseButtonDown(0))
-        {
-            var worldPos = Camera.main.ScreenToWorldPoint(Input.mousePosition);
-            worldPos.z = 0;
-            if (currentItem.prefab != null)
-            {
-                Instantiate(currentItem.prefab, worldPos, Quaternion.identity);
-                RemoveItem(currentItem, 1);
-            }
-        }
     }
 
     //invoke when not clicking ui
@@ -141,17 +96,15 @@ public class PlayerInventory : MonoBehaviour
                         itemList[index].count = 0;
                         onInvUpdate.Invoke();
                         onInventoryUpdate.Invoke(itemList);
+                        SelectSlot(selectedSlot);
                         return true;
                     }
-
+                    SelectSlot(selectedSlot);
                     onInventoryUpdate.Invoke(itemList);
                     return true;
                 }
-                else
-                {
-                    Debug.Log($"Inventory : {item.name} not enough");
-                    return false;
-                }
+                Debug.Log($"Inventory : {item.name} not enough");
+                return false;
             }
 
         Debug.Log($"Inventory : {item.name} not founded");

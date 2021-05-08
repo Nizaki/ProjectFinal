@@ -6,20 +6,14 @@ using DG.Tweening;
 
 public class PlayerController : MonoBehaviour
 {
-    public PlayerController Instance;
     public Player player;
     public float speed = 5f;
     public Rigidbody2D rb;
     private Vector2 movement;
     public GameObject craftUI;
-    public EasyTween crafttingPanel;
     private bool movable = true;
-    private bool craftingUI = false;
+    private bool craftingUI;
 
-    private void Awake()
-    {
-        Instance = this;
-    }
 
     // Start is called before the first frame update
     private void Start()
@@ -42,6 +36,18 @@ public class PlayerController : MonoBehaviour
             if (EventSystem.current.IsPointerOverGameObject()) return;
 
             player.Attack();
+        }
+        
+        if (Input.GetMouseButtonDown(1))
+        {
+            if (EventSystem.current.IsPointerOverGameObject()) return;
+
+            player.Use();
+        }
+
+        if (Input.GetKeyDown(KeyCode.P))
+        {
+            player.TakeDamage(100);
         }
     }
 
