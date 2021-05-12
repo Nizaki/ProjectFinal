@@ -1,16 +1,18 @@
 using System.Collections;
 using System.Collections.Generic;
+using System.Linq;
 using UnityEngine;
 using UnityEngine.UI;
 using TMPro;
+using UnityEngine.EventSystems;
 
-public class RecipeSlot : MonoBehaviour
+public class RecipeSlot : MonoBehaviour, IPointerEnterHandler, IPointerExitHandler
 {
     public RecipeObject recipe;
     [SerializeField] private Image picture;
     [SerializeField] private TextMeshProUGUI itemName;
     [SerializeField] private Button button;
-    private bool Craftable = false;
+    private bool craftable = false;
     private PlayerInventory player;
 
     private void Awake()
@@ -36,7 +38,7 @@ public class RecipeSlot : MonoBehaviour
                     itemCount++;
         if (itemCount == recipe.Input.Length)
         {
-            Craftable = true;
+            craftable = true;
             button.interactable = true;
         }
         else
@@ -48,9 +50,24 @@ public class RecipeSlot : MonoBehaviour
         // }
     }
 
+    public void OnPointerEnter(PointerEventData eventData)
+    {
+        var temp = recipe.Input.Aggregate("", (current, rec) => current + $"{rec.Item.name} - {rec.count} \n");
+        // TooltipsScreenSpace.ShowTooltip($"{recipe.Output.Item.name} \n {temp}");
+        CraftingWindow.ShowText($"{recipe.Output.Item.name} \n {temp}");
+        Debug.Log("Pointer Enter");
+    }
+
+    public void OnPointerExit(PointerEventData eventData)
+    {
+        // TooltipsScreenSpace.HideTooltip();
+        CraftingWindow.Hide();
+    }
+    
+    
     public void Craft()
     {
-        if (Craftable)
+        if (craftable)
         {
             foreach (var req in recipe.Input) player.RemoveItem(req);
             player.AddItem(recipe.Output);

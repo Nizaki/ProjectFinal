@@ -1,13 +1,25 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
+using TMPro;
 using UnityEngine;
 
 public class CraftingWindow : MonoBehaviour
 {
+    private static CraftingWindow self;
     public List<RecipeObject> recipes;
     [SerializeField] private GameObject recipeHolder;
 
     [SerializeField] private GameObject recipeTemplate;
+
+    [SerializeField] private GameObject RequirePanel;
+
+    [SerializeField] private TextMeshProUGUI text;
+
+    private void Awake()
+    {
+        self = this;
+    }
 
     // Start is called before the first frame update
     private void Start()
@@ -22,8 +34,14 @@ public class CraftingWindow : MonoBehaviour
         }
     }
 
-    // Update is called once per frame
-    private void Update()
+    public static void ShowText(string text)
     {
+        self.RequirePanel.SetActive(true);
+        self.text.text = text;
+    }
+
+    public static void Hide()
+    {
+        self.RequirePanel.SetActive(false);
     }
 }
