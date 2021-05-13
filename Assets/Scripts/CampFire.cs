@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.EventSystems;
 
-public class CampFire : MonoBehaviour, IPointerClickHandler
+public class CampFire : MonoBehaviour
 {
     public CircleCollider2D coli;
     public GameObject light2D;
@@ -44,10 +44,5 @@ public class CampFire : MonoBehaviour, IPointerClickHandler
     private void OnTriggerExit2D(Collider2D collision)
     {
         if (collision.CompareTag("Player")) collision.GetComponent<Player>().underLight = false;
-    }
-
-    public void OnPointerClick(PointerEventData eventData)
-    {
-        if (eventData.button == PointerEventData.InputButton.Right) CampfirePanel.ShowPanel(this);
     }
 }

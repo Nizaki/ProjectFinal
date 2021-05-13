@@ -3,6 +3,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.Events;
+using UnityEngine.UI;
 
 public class Player : MonoBehaviour
 {
@@ -32,6 +33,8 @@ public class Player : MonoBehaviour
     public PlayerInventory inventory;
 
     private PlayerUiManager ui;
+
+    private Camera cam;
     // Start is called before the first frame update
     private void Start()
     {
@@ -41,6 +44,8 @@ public class Player : MonoBehaviour
         onDeath ??= new UnityEvent();
         onTakeDamage ??= new UnityEvent<int>();
         ui = GameObject.Find("PlayerUI")?.GetComponent<PlayerUiManager>();
+        cam = Camera.main;
+        
     }
 
     // Update is called once per frame
@@ -111,7 +116,6 @@ public class Player : MonoBehaviour
     public void DoDamage()
     {
         var toDamage = Physics2D.OverlapCircleAll(attackPos.position, attackRange);
-        Debug.Log($"Attack found {toDamage.Length}");
         foreach (var item in toDamage)
         {
             IDamagable damagable = item.gameObject.GetComponent<InterObject>();
@@ -176,6 +180,9 @@ public class Player : MonoBehaviour
 
     public void Use()
     {
+        
+        
+        //Check if can Interact with object
         var item = inventory.currentItem;
         var itemType = item.type;
         switch (itemType)
@@ -198,11 +205,17 @@ public class Player : MonoBehaviour
                 break;
             case ItemType.Build:
                 //build
-                var worldPos = Camera.main.ScreenToWorldPoint(Input.mousePosition);
-                worldPos.z = 0;
+                var mousePos = cam.ScreenToWorldPoint(Input.mousePosition);
+                var hit = Physics2D.Raycast(mousePos,Vector2.zero);
+
+                if (hit.collider != null)
+                {
+                    return;
+                }
+                mousePos.z = 0;
                 if (item.prefab != null)
                 {
-                    Instantiate(item.prefab, worldPos, Quaternion.identity);
+                    Instantiate(item.prefab, mousePos, Quaternion.identity);
                     inventory.RemoveItem(item, 1);
                 }
                 break;
