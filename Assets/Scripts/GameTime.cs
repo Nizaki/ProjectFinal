@@ -18,6 +18,7 @@ public class GameTime : MonoBehaviour
     public float totalTime;
     public Light2D light2D;
 
+    public float fadeDuration = 3f;
     // Start is called before the first frame update
     private void Start()
     {
@@ -37,14 +38,14 @@ public class GameTime : MonoBehaviour
         {
             //doSomeTing
             Debug.Log("it Day Now");
-            light2D.intensity = 1f;
+            StartCoroutine(nameof(Sunrise));
             state = TimeState.Day;
         }
         else if (time > dayLength && state == TimeState.Day)
         {
             state = TimeState.Night;
             Debug.Log("It Night Time");
-            light2D.intensity = 0.1f;
+            StartCoroutine(nameof(Sunset));
             //doSomeThing
         }
 
@@ -54,7 +55,32 @@ public class GameTime : MonoBehaviour
             day += 1;
         }
     }
+    
 
+
+    IEnumerator Sunrise()
+    {
+        for (float i = 0; i < fadeDuration; i+=Time.deltaTime)
+        {
+            light2D.intensity = Mathf.Lerp(0, 1, i / fadeDuration);
+            yield return new WaitForEndOfFrame();
+        }
+
+        light2D.intensity = 1;
+        AudioPlayer.Instance.PlayDay();
+    }
+    
+    IEnumerator Sunset()
+    {
+        for (float i = 0; i < fadeDuration; i+=Time.deltaTime)
+        {
+            light2D.intensity = Mathf.Lerp(1, 0.1f, i / fadeDuration);
+            yield return new WaitForEndOfFrame();
+        }
+
+        light2D.intensity = 0.1f;
+    }
+    
     public void StopTime()
     {
         running = false;

@@ -155,6 +155,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 754c9c51725137c47a3dbfc502f6c8fd, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  DayBGM: {fileID: 8300000, guid: 8bb8969160dfbc0488f454cb844db7f0, type: 3}
+  NighthBGM: {fileID: 8300000, guid: 8bb8969160dfbc0488f454cb844db7f0, type: 3}
 --- !u!114 &1445541455
 MonoBehaviour:
   m_ObjectHideFlags: 0
