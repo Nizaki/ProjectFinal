@@ -9,6 +9,8 @@ public class AudioPlayer : MonoBehaviour
 
     private AudioSource source;
 
+    [SerializeField] private AudioClip DayBGM;
+    [SerializeField] private AudioClip NighthBGM;
     private void Awake()
     {
         if (_instance != null && _instance != this)
@@ -33,5 +35,13 @@ public class AudioPlayer : MonoBehaviour
     public void Play(AudioClip clip)
     {
         source.PlayOneShot(clip);
+    }
+
+    public void PlayDay()
+    {
+        source.Stop();
+        source.clip = DayBGM;
+        source.Play();
+        source.loop = true;
     }
 }

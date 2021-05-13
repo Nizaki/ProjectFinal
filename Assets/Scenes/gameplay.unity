@@ -94266,6 +94266,7 @@ MonoBehaviour:
   day: 0
   totalTime: 0
   light2D: {fileID: 1772037757}
+  fadeDuration: 3
 --- !u!114 &1772037757
 MonoBehaviour:
   m_ObjectHideFlags: 0

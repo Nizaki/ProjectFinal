@@ -120,6 +120,8 @@ public class Player : MonoBehaviour
         {
             IDamagable damagable = item.gameObject.GetComponent<InterObject>();
             if (damagable != null && !item.isTrigger) damagable.TakeDamage(5);
+            hunger -= 5f;
+            water -= 2f;
         }
     }
 
