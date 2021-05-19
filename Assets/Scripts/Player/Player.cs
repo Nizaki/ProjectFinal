@@ -31,7 +31,8 @@ public class Player : MonoBehaviour
     public LayerMask enemy;
 
     public PlayerInventory inventory;
-
+    public Transform tooltipsPos;
+    public GameObject hpUp,hgUp,wtUp;
     private PlayerUiManager ui;
 
     private Camera cam;
@@ -192,14 +193,17 @@ public class Player : MonoBehaviour
             case ItemType.None:
                 break;
             case ItemType.Food:
+                Instantiate(hgUp, tooltipsPos);
                 Eat(Mathf.RoundToInt(item.data));
                 inventory.RemoveItem(item, 1);
                 break;
             case ItemType.Water:
+                Instantiate(wtUp, tooltipsPos);
                 Drink(Mathf.RoundToInt(item.data));
                 inventory.RemoveItem(item, 1);
                 break;
             case ItemType.Health:
+                Instantiate(hpUp, tooltipsPos);
                 Heal(Mathf.RoundToInt(item.data));
                 inventory.RemoveItem(item, 1);
                 break;

@@ -89,7 +89,6 @@ public class PlayerInventory : MonoBehaviour
                 if (stack.count >= count) // check item stock
                 {
                     stack.count -= count;
-                    Debug.Log($"Inventory : Remove {item.name} {count} ea");
                     if (stack.count <= 0)
                     {
                         itemList[index].Item = noneItem;
@@ -103,11 +102,11 @@ public class PlayerInventory : MonoBehaviour
                     onInventoryUpdate.Invoke(itemList);
                     return true;
                 }
-                Debug.Log($"Inventory : {item.name} not enough");
+                Debug.LogError($"Inventory : {item.name} not enough");
                 return false;
             }
 
-        Debug.Log($"Inventory : {item.name} not founded");
+        Debug.LogError($"Inventory : {item.name} not founded");
         return false;
     }
 

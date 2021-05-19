@@ -13,7 +13,7 @@ public class PlayerController : MonoBehaviour
     public GameObject craftUI;
     private bool movable = true;
     private bool craftingUI;
-
+    public Animator anime;
 
     // Start is called before the first frame update
     private void Start()
@@ -28,6 +28,9 @@ public class PlayerController : MonoBehaviour
         {
             movement.x = Input.GetAxisRaw("Horizontal");
             movement.y = Input.GetAxisRaw("Vertical");
+            anime.SetFloat("Speed",movement.sqrMagnitude);
+            anime.SetFloat("Horizontal",movement.x);
+            anime.SetFloat("Vertical",movement.y);
         }
 
         if (Input.GetKeyDown(KeyCode.C)) ToggleCraftUI();
