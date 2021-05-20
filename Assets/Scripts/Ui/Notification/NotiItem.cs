@@ -10,15 +10,13 @@ public class NotiItem : MonoBehaviour
     [SerializeField] private Image bg;
     [SerializeField] private TextMeshProUGUI label;
 
-    private Color transparent = new Color(255, 255, 255, 0);
-
     // Start is called before the first frame update
     private void Start()
     {
         //TODO: add destroy animation
-        bg.color = transparent;
-        label.color = transparent;
         StartCoroutine(nameof(AnimatedNoti));
+        bg.DOFade(0f, 0f);
+        label.DOFade(0f, 0f);
     }
 
     private IEnumerator AnimatedNoti()
