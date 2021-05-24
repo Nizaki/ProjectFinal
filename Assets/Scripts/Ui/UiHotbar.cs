@@ -23,13 +23,14 @@ public class UiHotbar : MonoBehaviour
     private void updateSlot()
     {
         foreach (var (item, index) in inventory.itemList.WithIndex())
-            if (item.Item != null)
+            if (item.Item.itemName != "")
             {
                 slot[index].color = new Color(255, 255, 255);
                 slot[index].sprite = item.Item.sprite;
             }
             else
             {
+                Debug.Log("Slot Empty");
                 slot[index].color = new Color(255, 255, 255, 0);
                 slot[index].sprite = null;
             }
@@ -37,10 +38,7 @@ public class UiHotbar : MonoBehaviour
 
     private void selectSlot(int slot)
     {
-        for (var i = 0; i < selectedImage.Length; i++)
-        {
-            selectedImage[i].SetActive(i == slot);
-        }
+        for (var i = 0; i < selectedImage.Length; i++) selectedImage[i].SetActive(i == slot);
     }
 
     private void OnDestroy()

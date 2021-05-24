@@ -1,5 +1,6 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
+using MyBox;
 using UnityEngine;
 
 [CreateAssetMenu(fileName = "New Item", menuName = "Game/Item")]
@@ -15,6 +16,9 @@ public class ItemObject : ScriptableObject
 
     public bool fuelable = false;
     public int fuelAmount = 10;
+    public bool spoilable;
+    [ConditionalField("spoilable")] public float spoilTime = 30f;
+    [ConditionalField("spoilable")]public ItemObject spoiledItem;
     [Multiline] public string description;
     public GameObject prefab;
 }

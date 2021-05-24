@@ -13,8 +13,9 @@ MonoBehaviour:
   m_Name: waterFruit
   m_EditorClassIdentifier: 
   itemName: Water Fruit
-  sprite: {fileID: 21300000, guid: 7696c821cd8cea5449a1b4f49111a03c, type: 3}
+  sprite: {fileID: 21300000, guid: 941d8132bc7434186960b2172e873ed5, type: 3}
   type: 2
+  equipType: 0
   data: 25
   fuelable: 1
   fuelAmount: -10

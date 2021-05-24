@@ -13,10 +13,19 @@ public class ItemSlot : MonoBehaviour, IPointerEnterHandler, IPointerExitHandler
 
     public void UpdateSlot(ItemStack item)
     {
-        image.color = new Color(255, 255, 255, 255);
-        image.sprite = item.sprite;
-        text.text = item.count.ToString();
-        currentItem = item.Item;
+        image.color = item != null ? new Color(255, 255, 255, 255) : new Color(255, 255, 255, 0);
+        if (item != null)
+        {
+            image.sprite = item.sprite;
+            text.text = item.count.ToString();
+            currentItem = item.Item;
+        }
+        else
+        {
+            image.sprite = null;
+            text.text = "";
+            currentItem = null;
+        }
     }
 
     public void Clear()

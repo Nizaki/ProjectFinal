@@ -10,14 +10,14 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: e706ca42014e7e94a8a9158c8ddb5a36, type: 3}
-  m_Name: Stone
+  m_Name: DryOrange
   m_EditorClassIdentifier: 
-  itemName: Stone
-  sprite: {fileID: 21300000, guid: f1be66f3f481c401599af0c69292c125, type: 3}
+  itemName: 
+  sprite: {fileID: 0}
   type: 0
   equipType: 0
   data: 0
   fuelable: 0
-  fuelAmount: 0
+  fuelAmount: 10
   description: 
   prefab: {fileID: 0}

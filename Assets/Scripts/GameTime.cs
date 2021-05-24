@@ -1,6 +1,7 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.Events;
 using UnityEngine.Experimental.Rendering.Universal;
 using UnityEngine.UI;
 
@@ -14,14 +15,17 @@ public class GameTime : MonoBehaviour
     public Text label;
     public float timeSpeed = 1f;
     public static TimeState state = TimeState.Night;
+    [HideInInspector] public UnityEvent<TimeState> onTimeChange;
     public int day;
     public float totalTime;
     public Light2D light2D;
 
     public float fadeDuration = 3f;
+
     // Start is called before the first frame update
     private void Start()
     {
+        onTimeChange ??= new UnityEvent<TimeState>();
         totalTimeLength = dayLength + nightLength;
     }
 
@@ -29,8 +33,9 @@ public class GameTime : MonoBehaviour
     {
         if (running)
         {
-            time += timeSpeed * Time.fixedDeltaTime;
-            totalTime += timeSpeed * Time.fixedDeltaTime;
+            var add = timeSpeed * Time.fixedDeltaTime;
+            time += add;
+            totalTime += add;
         }
 
         label.text = string.Format($"day:{day} Time:{state}");
@@ -55,12 +60,12 @@ public class GameTime : MonoBehaviour
             day += 1;
         }
     }
-    
 
 
-    IEnumerator Sunrise()
+    private IEnumerator Sunrise()
     {
-        for (float i = 0; i < fadeDuration; i+=Time.deltaTime)
+        day += 1;
+        for (float i = 0; i < fadeDuration; i += Time.deltaTime)
         {
             light2D.intensity = Mathf.Lerp(0, 1, i / fadeDuration);
             yield return new WaitForEndOfFrame();
@@ -68,19 +73,21 @@ public class GameTime : MonoBehaviour
 
         light2D.intensity = 1;
         AudioPlayer.Instance.PlayDay();
+        onTimeChange.Invoke(TimeState.Day);
     }
-    
-    IEnumerator Sunset()
+
+    private IEnumerator Sunset()
     {
-        for (float i = 0; i < fadeDuration; i+=Time.deltaTime)
+        for (float i = 0; i < fadeDuration; i += Time.deltaTime)
         {
             light2D.intensity = Mathf.Lerp(1, 0.1f, i / fadeDuration);
             yield return new WaitForEndOfFrame();
         }
 
         light2D.intensity = 0.1f;
+        onTimeChange.Invoke(TimeState.Night);
     }
-    
+
     public void StopTime()
     {
         running = false;

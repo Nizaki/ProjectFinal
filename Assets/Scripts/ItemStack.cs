@@ -13,7 +13,8 @@ public class ItemStack
 
     public float data => Item.data;
     public int count = 0;
-
+    public bool spoilable => Item.spoilable;
+    [HideInInspector]public float remainTime;
     public void clear()
     {
         Item = null;

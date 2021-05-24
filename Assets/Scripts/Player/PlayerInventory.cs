@@ -1,5 +1,7 @@
-﻿using System.Collections;
+﻿using System;
+using System.Collections;
 using System.Collections.Generic;
+using System.Linq;
 using UnityEngine;
 using UnityEngine.Events;
 
@@ -28,6 +30,23 @@ public class PlayerInventory : MonoBehaviour
         onInventoryUpdate.Invoke(itemList);
     }
 
+    private void LateUpdate()
+    {
+        foreach (var item in itemList.Where(item => item.spoilable).Where(item => item.remainTime < Time.time))
+        {
+            if (item.Item.spoiledItem)
+            {
+                RemoveItem(item);
+                AddItem(item.Item.spoiledItem,item.count);
+            }
+            else
+            {
+                item.remainTime = Time.time + item.Item.spoilTime;
+                Debug.LogError("no spoiled item found in spoiable item");
+            }
+        }
+    }
+
     public bool AddItem(ItemObject item, int count = 1)
     {
         var temp = new ItemStack {Item = item, count = count};
@@ -36,22 +55,28 @@ public class PlayerInventory : MonoBehaviour
 
     public bool AddItem(ItemStack item)
     {
-        foreach (var t in itemList)
-            if (t.Item == noneItem)
+        foreach (var cItem in itemList)
+            if (cItem.Item == noneItem)
             {
-                t.Item = item.Item;
-                t.count = item.count;
+                cItem.Item = item.Item;
+                cItem.count = item.count;
+                if (item.spoilable)
+                    cItem.remainTime = Time.time + item.Item.spoilTime;
                 onInvUpdate.Invoke();
                 onInventoryUpdate.Invoke(itemList);
                 SelectSlot(selectedSlot);
+
                 return true;
             }
-            else if (t.name == item.name)
+            else if (cItem.name == item.name)
             {
-                t.count += 1;
+                cItem.count += item.count;
+                if (item.spoilable)
+                    cItem.remainTime = Time.time + item.Item.spoilTime;
                 onInvUpdate.Invoke();
                 onInventoryUpdate.Invoke(itemList);
                 SelectSlot(selectedSlot);
+
                 return true;
             }
         SelectSlot(selectedSlot);
@@ -69,11 +94,6 @@ public class PlayerInventory : MonoBehaviour
         selectedSlot = slot;
         onSelectSlot.Invoke(slot);
         currentItem = itemList[selectedSlot].Item;
-    }
-
-    //invoke when not clicking ui
-    public void Use()
-    {
     }
 
     public bool RemoveItem(ItemStack itemStack)

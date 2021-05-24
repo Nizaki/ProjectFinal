@@ -13,10 +13,13 @@ MonoBehaviour:
   m_Name: oragne
   m_EditorClassIdentifier: 
   itemName: Orange
-  sprite: {fileID: 21300000, guid: 10dac184b59e6214b8f025121a183ea3, type: 3}
+  sprite: {fileID: 21300000, guid: 447efbb15ca844c8583882823eaf008c, type: 3}
   type: 1
+  equipType: 0
   data: 15
   fuelable: 0
   fuelAmount: 10
+  spoilable: 1
+  spoilTime: 5
   description: 
   prefab: {fileID: 0}

@@ -28,7 +28,7 @@ public class CampfirePanel : MonoBehaviour
     private void Update()
     {
         if (gameObject.activeSelf)
-            statusText.SetText($"Remaining fuel : {currentCamp.fuel.ToString("0")}%<br>" +
+            statusText.SetText($"Remaining fuel : {currentCamp.fuel:0}%<br>" +
                                $"Drain Rate : {currentCamp.fuelDrain}% per second");
     }
 

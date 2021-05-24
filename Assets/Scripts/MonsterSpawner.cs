@@ -42,16 +42,16 @@ public class MonsterSpawner : MonoBehaviour
         monsterCount -= 1;
     }
     
-    float CheckPos(float value)
+    public static float CheckPos(float value)
     {
-        if (value < 5 && value > -5)
+        if (value < 10 && value > -10)
         {
             if (Random.Range(0, 1) == 1)
             {
-                return 5f;
+                return 10f;
             }
 
-            return -5f;
+            return -10f;
         }
 
         return value;

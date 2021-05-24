@@ -9,11 +9,8 @@ MonoBehaviour:
   m_GameObject: {fileID: 0}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: e706ca42014e7e94a8a9158c8ddb5a36, type: 3}
-  m_Name: Axe
+  m_Script: {fileID: 11500000, guid: 231dee75263d41c5bf73bdae20944c0e, type: 3}
+  m_Name: wave1
   m_EditorClassIdentifier: 
-  itemName: Axe
-  sprite: {fileID: 21300000, guid: f492b0174fe163946a8dcfe94bce4f8c, type: 3}
-  type: 4
-  data: 0
-  description: 
+  MonsterList:
+  - {fileID: 5236995748690658828, guid: 37a7115f659b6aa43bc3d9436dd859cb, type: 3}

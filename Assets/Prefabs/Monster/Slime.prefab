@@ -241,15 +241,18 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 0247c22e672882946a7962e45d145e34, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  Hp: 10
-  MaxHP: 10
-  EffectiveType: 0
+  hp: 10
+  maxHp: 10
+  effectiveType: 0
   hasAI: 1
   ai: 0
-  FollowDistance: 7
-  attackRange: 3
+  followDistance: 50
+  attackRange: 1
   DropList: []
   attackDelay: 3
-  customeDropLocation: {fileID: 0}
+  customDropLocation: {fileID: 0}
   hitSound: {fileID: 0}
   die: {fileID: 0}
+  onDie:
+    m_PersistentCalls:
+      m_Calls: []
