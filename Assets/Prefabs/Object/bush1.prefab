@@ -12,6 +12,7 @@ GameObject:
   - component: {fileID: 5525713967829651511}
   - component: {fileID: 5792120631114350971}
   - component: {fileID: 3511787132166607679}
+  - component: {fileID: 1985384147964529077}
   m_Layer: 0
   m_Name: bush1
   m_TagString: Interactive
@@ -126,3 +127,31 @@ BoxCollider2D:
   serializedVersion: 2
   m_Size: {x: 1.8125, y: 0.27206755}
   m_EdgeRadius: 0
+--- !u!114 &1985384147964529077
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4993382093538622764}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 0247c22e672882946a7962e45d145e34, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  hp: 10
+  maxHp: 10
+  onlyTakeDamageByEffective: 0
+  effectiveType: 0
+  hasAI: 0
+  ai: 0
+  followDistance: 5
+  attackRange: 5
+  DropList: []
+  attackDelay: 5
+  customDropLocation: {fileID: 0}
+  hitSound: {fileID: 0}
+  die: {fileID: 0}
+  onDie:
+    m_PersistentCalls:
+      m_Calls: []

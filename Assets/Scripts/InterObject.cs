@@ -9,6 +9,8 @@ public class InterObject : MonoBehaviour, IDamagable
     private bool alive = true;
     public float hp = 10;
     public float maxHp = 10;
+    
+    public bool onlyTakeDamageByEffective = false;
     public EquipType effectiveType = EquipType.None;
     public bool hasAI = true;
 
@@ -49,10 +51,19 @@ public class InterObject : MonoBehaviour, IDamagable
     public void TakeDamage(int damage, EquipType sourceEquip = EquipType.None)
     {
         AudioPlayer.Instance?.Play(hitSound);
-        if (sourceEquip == effectiveType)
-            hp -= 5;
+        if (onlyTakeDamageByEffective)
+        {
+            if(sourceEquip != effectiveType)
+                return;
+            hp -= damage;
+        }
         else
-            hp -= 2;
+        {
+            if (sourceEquip == effectiveType)
+                hp -= 5;
+            else
+                hp -= 2;
+        }
         if (hp <= 0) Die();
     }
 

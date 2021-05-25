@@ -46,6 +46,6 @@ public class DropManager : MonoBehaviour
 [System.Serializable]
 public class ChanceItem
 {
-    [SerializeField] [Range(0, 100)] public int chance;
+    [SerializeField] [Range(100, 100)] public int chance;
     [SerializeField] public ItemStack item;
 }

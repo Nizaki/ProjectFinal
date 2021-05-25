@@ -37,5 +37,6 @@ public enum EquipType
 {
     None,
     Axe,
-    Sword
+    Sword,
+    PickAxe
 }

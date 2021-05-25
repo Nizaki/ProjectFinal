@@ -10,7 +10,6 @@ GameObject:
   m_Component:
   - component: {fileID: 900378937106571339}
   - component: {fileID: 5310430087511780409}
-  - component: {fileID: 1905074984904128754}
   - component: {fileID: 3864484711549972273}
   - component: {fileID: 1199059309109415083}
   m_Layer: 0
@@ -85,23 +84,6 @@ SpriteRenderer:
   m_WasSpriteAssigned: 1
   m_MaskInteraction: 0
   m_SpriteSortPoint: 0
---- !u!114 &1905074984904128754
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 4634548276537016610}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: eb08c2241c63ece4996243cbac3c81a5, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  prefab: {fileID: 1506881121589561799, guid: 9c4fa7294505ad247886a5c7b856596f, type: 3}
-  count: 5
-  requireTool: {fileID: 11400000, guid: d1279942d99448642a1ba5f13137d765, type: 2}
-  dropOffset: 0.3
-  interactRange: 2
 --- !u!61 &3864484711549972273
 BoxCollider2D:
   m_ObjectHideFlags: 0
@@ -140,15 +122,19 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 0247c22e672882946a7962e45d145e34, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  Hp: 10
-  MaxHP: 10
-  EffectiveType: 0
+  hp: 10
+  maxHp: 10
+  onlyTakeDamageByEffective: 1
+  effectiveType: 3
   hasAI: 0
   ai: 0
-  FollowDistance: 5
+  followDistance: 5
   attackRange: 5
   DropList: []
   attackDelay: 5
-  customeDropLocation: {fileID: 0}
+  customDropLocation: {fileID: 0}
   hitSound: {fileID: 0}
   die: {fileID: 0}
+  onDie:
+    m_PersistentCalls:
+      m_Calls: []
