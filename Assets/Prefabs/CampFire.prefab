@@ -84,6 +84,7 @@ GameObject:
   - component: {fileID: 4869157802962464678}
   - component: {fileID: 4869157802962464673}
   - component: {fileID: 4869157802962464672}
+  - component: {fileID: 6033824674801547186}
   m_Layer: 0
   m_Name: CampFire
   m_TagString: Untagged
@@ -146,7 +147,7 @@ SpriteRenderer:
   m_SortingLayerID: -128255115
   m_SortingLayer: 1
   m_SortingOrder: 0
-  m_Sprite: {fileID: 21300000, guid: c8413fd2d482bb54999f11ed9f78cb6a, type: 3}
+  m_Sprite: {fileID: -9102082985684471314, guid: b0fc3cf48644440fd83d5dfb7deeaf0a, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_FlipX: 0
   m_FlipY: 0
@@ -187,3 +188,22 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   light2D: {fileID: 4869157801724122889}
   duration: 70
+--- !u!95 &6033824674801547186
+Animator:
+  serializedVersion: 3
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4869157802962464677}
+  m_Enabled: 1
+  m_Avatar: {fileID: 0}
+  m_Controller: {fileID: 9100000, guid: 125e25f0cb8d12440880dd4fecf1819f, type: 2}
+  m_CullingMode: 0
+  m_UpdateMode: 0
+  m_ApplyRootMotion: 0
+  m_LinearVelocityBlending: 0
+  m_WarningMessage: 
+  m_HasTransformHierarchy: 1
+  m_AllowConstantClipSamplingOptimization: 1
+  m_KeepAnimatorControllerStateOnDisable: 0
