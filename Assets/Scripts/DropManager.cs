@@ -25,14 +25,12 @@ public class DropManager : MonoBehaviour
     {
         foreach (var item in drop)
         {
-            Debug.Log(item.item.name);
             Instance.RandomDrop(item, pos);
         }
     }
 
     private void RandomDrop(ChanceItem drop, Vector2 pos)
     {
-        if (drop.chance <= Random.Range(0, 100)) return;
         var obj = Instantiate(dropTemplate, pos, Quaternion.identity);
         obj.GetComponent<DropItem>().item = drop.item.Item;
     }

@@ -13,9 +13,7 @@ public class ItemObject : ScriptableObject
 
     [Tooltip("ตัวเลขตามผลของไอเท็มเช่น ถ้าเป็นอาหารจะเพิ่มความหิว")]
     public float data; //damge amount of hp hung bra bra
-
-    public bool fuelable = false;
-    public int fuelAmount = 10;
+    
     public bool spoilable;
     [ConditionalField("spoilable")] public float spoilTime = 30f;
     [ConditionalField("spoilable")]public ItemObject spoiledItem;
@@ -38,5 +36,6 @@ public enum EquipType
     None,
     Axe,
     Sword,
-    PickAxe
+    PickAxe,
+    NoEffective
 }

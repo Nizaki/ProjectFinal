@@ -15,9 +15,10 @@ MonoBehaviour:
   itemName: Axe
   sprite: {fileID: 21300000, guid: 737da09c6ef384069b3467bfae3ee065, type: 3}
   type: 4
-  equipType: 0
-  data: 0
-  fuelable: 0
-  fuelAmount: 10
+  equipType: 1
+  data: 2
+  spoilable: 0
+  spoilTime: 30
+  spoiledItem: {fileID: 0}
   description: 
   prefab: {fileID: 0}

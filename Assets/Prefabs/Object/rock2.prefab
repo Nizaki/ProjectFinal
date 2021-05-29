@@ -130,7 +130,12 @@ MonoBehaviour:
   ai: 0
   followDistance: 5
   attackRange: 5
-  DropList: []
+  DropList:
+  - chance: 0
+    item:
+      Item: {fileID: 11400000, guid: 297a869bbd27866468b3f5d13e46707d, type: 2}
+      count: 2
+      remainTime: 0
   attackDelay: 5
   customDropLocation: {fileID: 0}
   hitSound: {fileID: 0}

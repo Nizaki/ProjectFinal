@@ -1,0 +1,24 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: e706ca42014e7e94a8a9158c8ddb5a36, type: 3}
+  m_Name: PickaxeWood
+  m_EditorClassIdentifier: 
+  itemName: Wooden Pickaxe
+  sprite: {fileID: 21300000, guid: 51bc6e7c4e9c64c8a91702c84b0a9935, type: 3}
+  type: 4
+  equipType: 3
+  data: 2
+  spoilable: 0
+  spoilTime: 30
+  spoiledItem: {fileID: 0}
+  description: 
+  prefab: {fileID: 0}

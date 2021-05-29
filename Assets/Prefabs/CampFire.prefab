@@ -185,8 +185,5 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 0dd6c0f0a5de8914faed636470a1d8c2, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  coli: {fileID: 0}
   light2D: {fileID: 4869157801724122889}
-  turnOn: 0
-  fuel: 100
-  fuelDrain: 1
+  duration: 70

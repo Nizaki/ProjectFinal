@@ -18,11 +18,6 @@ public class RaidManager : MonoBehaviour
         gt.onTimeChange.AddListener(OnNight);
     }
 
-    // Update is called once per frame
-    private void Update()
-    {
-    }
-
     private void OnNight(TimeState time)
     {
         if (time != TimeState.Night)

@@ -12,14 +12,13 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: e706ca42014e7e94a8a9158c8ddb5a36, type: 3}
   m_Name: oragne
   m_EditorClassIdentifier: 
-  itemName: Orange
+  itemName: Fruit
   sprite: {fileID: 21300000, guid: 447efbb15ca844c8583882823eaf008c, type: 3}
   type: 1
   equipType: 0
   data: 15
-  fuelable: 0
-  fuelAmount: 10
   spoilable: 1
-  spoilTime: 5
+  spoilTime: 120
+  spoiledItem: {fileID: 0}
   description: 
   prefab: {fileID: 0}

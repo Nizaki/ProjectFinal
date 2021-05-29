@@ -16,6 +16,7 @@ public class Player : MonoBehaviour
     public float water = 100f;
     public float maxWater = 100f;
     public float waterDrainRate = 0.1f;
+    public float damage = 1f;
     public float maxDarkDelay = 3;
     [HideInInspector] public UnityEvent onDeath;
     [HideInInspector] public UnityEvent<int> onTakeDamage;
@@ -32,10 +33,11 @@ public class Player : MonoBehaviour
 
     public PlayerInventory inventory;
     public Transform tooltipsPos;
-    public GameObject hpUp,hgUp,wtUp;
+    public GameObject hpUp, hgUp, wtUp;
     private PlayerUiManager ui;
 
     private Camera cam;
+
     // Start is called before the first frame update
     private void Start()
     {
@@ -46,7 +48,7 @@ public class Player : MonoBehaviour
         onTakeDamage ??= new UnityEvent<int>();
         ui = GameObject.Find("PlayerUI")?.GetComponent<PlayerUiManager>();
         cam = Camera.main;
-        
+        StartCoroutine(nameof(NeedDamage));
     }
 
     // Update is called once per frame
@@ -66,14 +68,49 @@ public class Player : MonoBehaviour
             PickUp(citem.item);
             Destroy(item.gameObject);
         }
+
+        CheckNeed();
     }
 
+    private void CheckNeed()
+    {
+        if (water <= 0)
+        {
+            water = 0;
+        }
+
+        if (hunger <= 0)
+        {
+            hunger = 0;
+        }
+    }
+
+    IEnumerator NeedDamage()
+    {
+        while (alive)
+        {
+            var tempDamage = 0;
+            if (water <= 0)
+            {
+                tempDamage += 3;
+            }
+
+            if (hunger <= 0)
+            {
+                tempDamage += 2;
+            }
+            if(tempDamage>0)
+                TakeDamage(tempDamage);
+            yield return new WaitForSeconds(5);
+        }
+    }
+    
     private void PickUp(ItemObject item)
     {
         inventory.AddItem(item);
         Notification.ShowNotification($"ได้รับ {item.name} 1 ชิ้น");
     }
-    
+
     private void UpdateLight()
     {
         if (underLight || GameTime.state == TimeState.Day)
@@ -120,9 +157,18 @@ public class Player : MonoBehaviour
         foreach (var item in toDamage)
         {
             IDamagable damagable = item.gameObject.GetComponent<InterObject>();
-            if (damagable != null && !item.isTrigger) damagable.TakeDamage(5);
-            hunger -= 5f;
-            water -= 2f;
+            if (damagable != null && !item.isTrigger)
+            {
+                if (inventory.currentItem.type == ItemType.Equip)
+                    damagable.TakeDamage(Mathf.RoundToInt(damage + inventory.currentItem.data),
+                        inventory.currentItem.equipType);
+                else
+                    damagable.TakeDamage(Mathf.RoundToInt(damage), EquipType.None);
+            }
+            if(hunger > 0)
+                hunger -= 2.5f;
+            if(water > 0)
+                water -= 1f;
         }
     }
 
@@ -140,7 +186,7 @@ public class Player : MonoBehaviour
         alive = false;
         ui.deathPanel.SetActive(true);
     }
-    
+
     private void FixedUpdate()
     {
         hunger -= hungerDrainRate * Time.fixedDeltaTime;
@@ -154,7 +200,7 @@ public class Player : MonoBehaviour
         Gizmos.color = Color.green;
         Gizmos.DrawWireSphere(transform.position, 1f);
     }
-    
+
 
     private void OnTriggerEnter2D(Collider2D collision)
     {
@@ -183,8 +229,6 @@ public class Player : MonoBehaviour
 
     public void Use()
     {
-        
-        
         //Check if can Interact with object
         var item = inventory.currentItem;
         var itemType = item.type;
@@ -212,18 +256,16 @@ public class Player : MonoBehaviour
             case ItemType.Build:
                 //build
                 var mousePos = cam.ScreenToWorldPoint(Input.mousePosition);
-                var hit = Physics2D.Raycast(mousePos,Vector2.zero);
+                var hit = Physics2D.Raycast(mousePos, Vector2.zero);
 
-                if (hit.collider != null)
-                {
-                    return;
-                }
+                if (hit.collider != null) return;
                 mousePos.z = 0;
                 if (item.prefab != null)
                 {
                     Instantiate(item.prefab, mousePos, Quaternion.identity);
                     inventory.RemoveItem(item, 1);
                 }
+
                 break;
             default:
                 throw new ArgumentOutOfRangeException();

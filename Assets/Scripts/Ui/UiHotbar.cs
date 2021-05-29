@@ -5,8 +5,7 @@ using UnityEngine.UI;
 
 public class UiHotbar : MonoBehaviour
 {
-    [SerializeField] private Image[] slot;
-    [SerializeField] private GameObject[] selectedImage;
+    [SerializeField] private HotbarSlot[] slots;
 
     private PlayerInventory inventory;
 
@@ -23,22 +22,26 @@ public class UiHotbar : MonoBehaviour
     private void updateSlot()
     {
         foreach (var (item, index) in inventory.itemList.WithIndex())
+        {
+            var cslot = slots[index];
             if (item.Item.itemName != "")
             {
-                slot[index].color = new Color(255, 255, 255);
-                slot[index].sprite = item.Item.sprite;
+                cslot.itemImage.color = new Color(255, 255, 255);
+                cslot.itemImage.sprite = item.Item.sprite;
+                cslot.countText.text = item.count.ToString();
             }
             else
             {
-                Debug.Log("Slot Empty");
-                slot[index].color = new Color(255, 255, 255, 0);
-                slot[index].sprite = null;
+                cslot.itemImage.color = new Color(255, 255, 255, 0);
+                cslot.itemImage.sprite = null;
+                cslot.countText.text = "";
             }
+        }
     }
 
     private void selectSlot(int slot)
     {
-        for (var i = 0; i < selectedImage.Length; i++) selectedImage[i].SetActive(i == slot);
+        for (var i = 0; i < slots.Length; i++) slots[i].activePanel.SetActive(i == slot);
     }
 
     private void OnDestroy()

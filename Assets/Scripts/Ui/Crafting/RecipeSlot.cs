@@ -55,7 +55,6 @@ public class RecipeSlot : MonoBehaviour, IPointerEnterHandler, IPointerExitHandl
         var temp = recipe.Input.Aggregate("", (current, rec) => current + $"{rec.Item.name} - {rec.count} \n");
         // TooltipsScreenSpace.ShowTooltip($"{recipe.Output.Item.name} \n {temp}");
         CraftingWindow.ShowText($"{recipe.Output.Item.name} \n {temp}");
-        Debug.Log("Pointer Enter");
     }
 
     public void OnPointerExit(PointerEventData eventData)

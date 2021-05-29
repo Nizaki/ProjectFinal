@@ -28,6 +28,7 @@ public class PlayerInventory : MonoBehaviour
     private void Start()
     {
         onInventoryUpdate.Invoke(itemList);
+        SelectSlot(0);
     }
 
     private void LateUpdate()
@@ -55,30 +56,26 @@ public class PlayerInventory : MonoBehaviour
 
     public bool AddItem(ItemStack item)
     {
-        foreach (var cItem in itemList)
-            if (cItem.Item == noneItem)
-            {
-                cItem.Item = item.Item;
-                cItem.count = item.count;
-                if (item.spoilable)
-                    cItem.remainTime = Time.time + item.Item.spoilTime;
-                onInvUpdate.Invoke();
-                onInventoryUpdate.Invoke(itemList);
-                SelectSlot(selectedSlot);
+        if (itemList.Exists(i => i.Item.name == item.Item.name))
+        {
+            itemList.Find(i => i.Item.name == item.Item.name).count += item.count;
+            onInvUpdate.Invoke();
+            onInventoryUpdate.Invoke(itemList);
+            SelectSlot(selectedSlot);
+            return true;
+        }
+        foreach (var cItem in itemList.Where(cItem => cItem.Item == noneItem))
+        {
+            cItem.Item = item.Item;
+            cItem.count = item.count;
+            if (item.spoilable)
+                cItem.remainTime = Time.time + item.Item.spoilTime;
+            onInvUpdate.Invoke();
+            onInventoryUpdate.Invoke(itemList);
+            SelectSlot(selectedSlot);
+            return true;
+        }
 
-                return true;
-            }
-            else if (cItem.name == item.name)
-            {
-                cItem.count += item.count;
-                if (item.spoilable)
-                    cItem.remainTime = Time.time + item.Item.spoilTime;
-                onInvUpdate.Invoke();
-                onInventoryUpdate.Invoke(itemList);
-                SelectSlot(selectedSlot);
-
-                return true;
-            }
         SelectSlot(selectedSlot);
         return false;
     }

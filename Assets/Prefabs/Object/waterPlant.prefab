@@ -150,13 +150,19 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   hp: 10
-  maxHp: 10
-  effectiveType: 0
+  maxHp: 2
+  onlyTakeDamageByEffective: 0
+  effectiveType: 4
   hasAI: 0
   ai: 0
   followDistance: 5
   attackRange: 5
-  DropList: []
+  DropList:
+  - chance: 0
+    item:
+      Item: {fileID: 11400000, guid: 39ecf58660a7ac144860e22a30acb324, type: 2}
+      count: 2
+      remainTime: 0
   attackDelay: 5
   customDropLocation: {fileID: 0}
   hitSound: {fileID: 0}

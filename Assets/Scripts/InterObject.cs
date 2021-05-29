@@ -60,9 +60,9 @@ public class InterObject : MonoBehaviour, IDamagable
         else
         {
             if (sourceEquip == effectiveType)
-                hp -= 5;
+                hp -= damage*2;
             else
-                hp -= 2;
+                hp -= damage;
         }
         if (hp <= 0) Die();
     }

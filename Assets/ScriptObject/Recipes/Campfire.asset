@@ -15,8 +15,14 @@ MonoBehaviour:
   Input:
   - Item: {fileID: 11400000, guid: f8014fa55f6c05c448a6ee84e0f0fd95, type: 2}
     count: 3
+    remainTime: 0
   - Item: {fileID: 11400000, guid: 297a869bbd27866468b3f5d13e46707d, type: 2}
-    count: 3
+    count: 2
+    remainTime: 0
+  - Item: {fileID: 11400000, guid: ed26ffa8c143ee84f9ba6a08a0b76d3d, type: 2}
+    count: 2
+    remainTime: 0
   Output:
     Item: {fileID: 11400000, guid: 47359f1ff3345334b8ac1f92c4b4f652, type: 2}
     count: 1
+    remainTime: 0
