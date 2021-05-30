@@ -12,7 +12,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: e706ca42014e7e94a8a9158c8ddb5a36, type: 3}
   m_Name: AxeStone
   m_EditorClassIdentifier: 
-  itemName: Axe
+  itemName: Stone Axe
   sprite: {fileID: 21300000, guid: 1fb50bab7263b449ab525853ba6f0bf7, type: 3}
   type: 4
   equipType: 1

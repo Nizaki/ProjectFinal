@@ -1,6 +1,7 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
+using Unity.Mathematics;
 using UnityEngine;
 
 public class Growable : MonoBehaviour
@@ -17,7 +18,7 @@ public class Growable : MonoBehaviour
     {
         yield return new WaitForSeconds(timeRequire);
 
-        Instantiate(target);
+        Instantiate(target,transform.position,quaternion.identity);
         Destroy(gameObject);
     }
 }

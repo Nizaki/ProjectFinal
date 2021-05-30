@@ -48,10 +48,43 @@ public class PlayerController : MonoBehaviour
             player.Use();
         }
 
-        if (Input.GetKeyDown(KeyCode.P))
+        if (Input.GetKey(KeyCode.Alpha1))
         {
-            player.TakeDamage(100);
+            player.inventory.SelectSlot(0);
         }
+        if (Input.GetKey(KeyCode.Alpha2))
+        {
+            player.inventory.SelectSlot(1);
+        }
+        if (Input.GetKey(KeyCode.Alpha3))
+        {
+            player.inventory.SelectSlot(2);
+        }
+        if (Input.GetKey(KeyCode.Alpha4))
+        {
+            player.inventory.SelectSlot(3);
+        }
+        if (Input.GetKey(KeyCode.Alpha5))
+        {
+            player.inventory.SelectSlot(4);
+        }
+        if (Input.GetKey(KeyCode.Alpha6))
+        {
+            player.inventory.SelectSlot(5);
+        }
+        if (Input.GetKey(KeyCode.Alpha7))
+        {
+            player.inventory.SelectSlot(6);
+        }
+        if (Input.GetKey(KeyCode.Alpha8))
+        {
+            player.inventory.SelectSlot(7);
+        }
+        if (Input.GetKey(KeyCode.Alpha9))
+        {
+            player.inventory.SelectSlot(8);
+        }
+        
     }
 
     private void EnableMove(bool value)

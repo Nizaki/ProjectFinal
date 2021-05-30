@@ -19,6 +19,7 @@ public class CampFire : MonoBehaviour
 
     private void OnTimeChange(TimeState timeState)
     {
+            Debug.Log(timeState);
         switch (timeState)
         {
             case TimeState.Day:

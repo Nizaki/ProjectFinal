@@ -12,7 +12,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: e706ca42014e7e94a8a9158c8ddb5a36, type: 3}
   m_Name: AxeWood
   m_EditorClassIdentifier: 
-  itemName: Axe
+  itemName: Wodden Axe
   sprite: {fileID: 21300000, guid: 737da09c6ef384069b3467bfae3ee065, type: 3}
   type: 4
   equipType: 1

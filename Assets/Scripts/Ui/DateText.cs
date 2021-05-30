@@ -18,6 +18,6 @@ public class DateText : MonoBehaviour
     // Update is called once per frame
     private void Update()
     {
-        tmp.text = "Day: " + timeObject.day;
+        tmp.text = "วันที่ " + timeObject.day;
     }
 }

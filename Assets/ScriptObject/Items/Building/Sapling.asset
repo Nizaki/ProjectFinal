@@ -12,12 +12,13 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: e706ca42014e7e94a8a9158c8ddb5a36, type: 3}
   m_Name: Sapling
   m_EditorClassIdentifier: 
-  itemName: 
-  sprite: {fileID: 0}
-  type: 0
+  itemName: Sapling
+  sprite: {fileID: 21300000, guid: 1a12ad7dd3e7c0d48a8deed2955adf33, type: 3}
+  type: 5
   equipType: 0
   data: 0
-  fuelable: 0
-  fuelAmount: 10
+  spoilable: 0
+  spoilTime: 30
+  spoiledItem: {fileID: 0}
   description: 
-  prefab: {fileID: 0}
+  prefab: {fileID: 1288685582999170580, guid: e7129cf838b9ede40965f45e871ae42b, type: 3}

@@ -14,7 +14,7 @@ public class GameTime : MonoBehaviour
     public float totalTimeLength;
     public Text label;
     public float timeSpeed = 1f;
-    public static TimeState state = TimeState.Night;
+    public static TimeState state = TimeState.Day;
     [HideInInspector] public UnityEvent<TimeState> onTimeChange;
     public int day;
     public float totalTime;
@@ -37,27 +37,24 @@ public class GameTime : MonoBehaviour
             time += add;
             totalTime += add;
         }
-
-        label.text = string.Format($"day:{day} Time:{state}");
         if (time < dayLength && state == TimeState.Night)
         {
             //doSomeTing
-            Debug.Log("it Day Now");
             StartCoroutine(nameof(Sunrise));
+            Debug.Log("Day Time");
             state = TimeState.Day;
         }
         else if (time > dayLength && state == TimeState.Day)
         {
             state = TimeState.Night;
-            Debug.Log("It Night Time");
             StartCoroutine(nameof(Sunset));
+            Debug.Log("Night Time");
             //doSomeThing
         }
 
         if (time > dayLength + nightLength)
         {
             time = 0;
-            day += 1;
         }
     }
 

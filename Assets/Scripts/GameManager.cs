@@ -30,11 +30,7 @@ public class GameManager : MonoBehaviour
     {
         SceneLoader.Instance.Load("Menu");
         ClearScore();
-        SaveScore("aui", 1999);
-        SaveScore("lnwza", 8);
-        SaveScore("auiKung", 895);
-        SaveScore("aui2", 1);
-        SaveScore("aui954", 2);
+        SaveScore("Ryu", 2497);
     }
 
     public static void ClearScore()

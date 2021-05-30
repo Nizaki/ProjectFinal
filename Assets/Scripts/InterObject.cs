@@ -114,12 +114,8 @@ public class InterObject : MonoBehaviour, IDamagable
 
                     break;
                 case AI.Follow:
-                    if (distance > followDistance)
-                    {
-                        moving = false;
-                        ai = AI.Idle;
-                    }
-                    else if (distance < attackRange)
+
+                    if (distance < attackRange)
                     {
                         moving = false;
                         ai = AI.Attack;

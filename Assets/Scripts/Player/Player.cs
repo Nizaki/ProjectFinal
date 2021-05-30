@@ -108,7 +108,7 @@ public class Player : MonoBehaviour
     private void PickUp(ItemObject item)
     {
         inventory.AddItem(item);
-        Notification.ShowNotification($"ได้รับ {item.name} 1 ชิ้น");
+        Notification.ShowNotification($"ได้รับ {item.itemName} 1 ชิ้น");
     }
 
     private void UpdateLight()
@@ -159,16 +159,17 @@ public class Player : MonoBehaviour
             IDamagable damagable = item.gameObject.GetComponent<InterObject>();
             if (damagable != null && !item.isTrigger)
             {
+                if (hunger > 0)
+                    hunger -= .5f;
+                if (water > 0)
+                    water -= .25f;
                 if (inventory.currentItem.type == ItemType.Equip)
                     damagable.TakeDamage(Mathf.RoundToInt(damage + inventory.currentItem.data),
                         inventory.currentItem.equipType);
                 else
                     damagable.TakeDamage(Mathf.RoundToInt(damage), EquipType.None);
+                return;
             }
-            if(hunger > 0)
-                hunger -= 2.5f;
-            if(water > 0)
-                water -= 1f;
         }
     }
 

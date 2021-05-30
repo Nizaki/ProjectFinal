@@ -13,7 +13,7 @@ MonoBehaviour:
   m_Name: DryOrange
   m_EditorClassIdentifier: 
   itemName: Dry Fruit
-  sprite: {fileID: 21300000, guid: 10dac184b59e6214b8f025121a183ea3, type: 3}
+  sprite: {fileID: 21300000, guid: 85bf0cf0be5fdad4fbc1376d73632646, type: 3}
   type: 1
   equipType: 0
   data: 10

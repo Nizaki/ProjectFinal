@@ -248,7 +248,7 @@ MonoBehaviour:
   hasAI: 1
   ai: 0
   followDistance: 50
-  attackRange: 1
+  attackRange: 2
   DropList:
   - chance: 100
     item:

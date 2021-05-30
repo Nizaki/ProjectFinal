@@ -20,7 +20,6 @@ public class Scoreboard : MonoBehaviour
     public void ResetScore()
     {
         GameManager.ClearScore();
-        ;
         UpdateScore();
     }
 

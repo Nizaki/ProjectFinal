@@ -195,7 +195,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: ac6f4b2629672a744937a2815b5e4fc7, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  sceneToLoad: gameplay
+  sceneToLoad: Menu
 --- !u!82 &1445541458
 AudioSource:
   m_ObjectHideFlags: 0

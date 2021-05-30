@@ -93,6 +93,11 @@ public class PlayerInventory : MonoBehaviour
         currentItem = itemList[selectedSlot].Item;
     }
 
+    public void RemoveItemAtSlot(int slot)
+    {
+        RemoveItem(itemList[slot]);
+    }
+
     public bool RemoveItem(ItemStack itemStack)
     {
         return RemoveItem(itemStack.Item, itemStack.count);

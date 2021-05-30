@@ -1,0 +1,22 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: d9f81096074e6a84bbe421629caabf90, type: 3}
+  m_Name: Sapling
+  m_EditorClassIdentifier: 
+  Input:
+  - Item: {fileID: 11400000, guid: b4d49c00965a78e438719062db9dabf6, type: 2}
+    count: 1
+    remainTime: 0
+  Output:
+    Item: {fileID: 11400000, guid: 9de82582b8f2cd842950604c3a645b31, type: 2}
+    count: 1
+    remainTime: 0
