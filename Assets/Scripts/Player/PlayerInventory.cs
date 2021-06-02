@@ -37,8 +37,10 @@ public class PlayerInventory : MonoBehaviour
         {
             if (item.Item.spoiledItem)
             {
+                var spoil = item.Item.spoiledItem;
+                var count = item.count;
                 RemoveItem(item);
-                AddItem(item.Item.spoiledItem,item.count);
+                AddItem(spoil,count);
             }
             else
             {

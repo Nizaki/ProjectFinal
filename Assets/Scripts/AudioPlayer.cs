@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.UI;
 
 public class AudioPlayer : MonoBehaviour
 {
@@ -11,6 +12,8 @@ public class AudioPlayer : MonoBehaviour
 
     [SerializeField] private AudioClip DayBGM;
     [SerializeField] private AudioClip NighthBGM;
+    [SerializeField] private List<AudioClip> BGMList;
+    [SerializeField] private List<AudioClip> SFXList;
     private void Awake()
     {
         if (_instance != null && _instance != this)
@@ -44,4 +47,27 @@ public class AudioPlayer : MonoBehaviour
         source.Play();
         source.loop = true;
     }
+
+    public void PlaySfx(SFX id)
+    {
+        source.PlayOneShot(SFXList[(int)id]);
+    }
+
+    public void PlayBGM(int id)
+    {
+        source.Stop();
+        source.clip = BGMList[id];
+        source.Play();
+        source.loop = true;
+    }
+
+    public void StopBGM()
+    {
+        source.Stop();
+    }
+}
+
+public enum SFX
+{
+    Eat = 1,Drink = 2,Heal = 3
 }

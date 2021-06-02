@@ -28,7 +28,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1288685582999170580}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: -4.9360213, y: -1.2254926, z: 0}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 0}
@@ -122,7 +122,7 @@ MonoBehaviour:
   DropList: []
   attackDelay: 5
   customDropLocation: {fileID: 0}
-  hitSound: {fileID: 0}
+  hitSound: {fileID: 8300000, guid: 92c88dbfa108ef749bfdf04b4662d3c3, type: 3}
   die: {fileID: 0}
   onDie:
     m_PersistentCalls:

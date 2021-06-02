@@ -174,7 +174,7 @@ MonoBehaviour:
       remainTime: 0
   attackDelay: 5
   customDropLocation: {fileID: 0}
-  hitSound: {fileID: 0}
+  hitSound: {fileID: 8300000, guid: 1c018924056d89747874d70fa368adee, type: 3}
   die: {fileID: 0}
   onDie:
     m_PersistentCalls:

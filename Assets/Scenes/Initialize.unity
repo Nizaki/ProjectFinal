@@ -155,8 +155,14 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 754c9c51725137c47a3dbfc502f6c8fd, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  DayBGM: {fileID: 8300000, guid: 8bb8969160dfbc0488f454cb844db7f0, type: 3}
-  NighthBGM: {fileID: 8300000, guid: 8bb8969160dfbc0488f454cb844db7f0, type: 3}
+  DayBGM: {fileID: 8300000, guid: 7b12de5fad106064686345e074194185, type: 3}
+  NighthBGM: {fileID: 0}
+  BGMList:
+  - {fileID: 8300000, guid: e5bb1b54c7bb87044842bf9201cf8bba, type: 3}
+  SFXList:
+  - {fileID: 8300000, guid: edfb3c9432b69b84f84251704f695463, type: 3}
+  - {fileID: 8300000, guid: f670f3afe3a245c44bfabfb503c8b1f1, type: 3}
+  - {fileID: 8300000, guid: eec96b1cdc4b2764dacfb38548a307ef, type: 3}
 --- !u!114 &1445541455
 MonoBehaviour:
   m_ObjectHideFlags: 0

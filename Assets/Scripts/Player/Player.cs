@@ -35,7 +35,7 @@ public class Player : MonoBehaviour
     public Transform tooltipsPos;
     public GameObject hpUp, hgUp, wtUp;
     private PlayerUiManager ui;
-
+    public bool running = false;
     private Camera cam;
 
     // Start is called before the first frame update
@@ -74,6 +74,19 @@ public class Player : MonoBehaviour
 
     private void CheckNeed()
     {
+        if (running)
+        {
+            hunger -= hungerDrainRate * 3f * Time.deltaTime;
+            water -= waterDrainRate * 3f * Time.deltaTime;
+        }
+        else
+        {
+            hunger -= hungerDrainRate * Time.deltaTime;
+            water -= waterDrainRate * Time.deltaTime;
+        }
+        
+        
+        
         if (water <= 0)
         {
             water = 0;
@@ -213,19 +226,25 @@ public class Player : MonoBehaviour
         if (collision.CompareTag("Interactive")) interactable.Remove(collision.gameObject);
     }
 
-    public void Heal(int value)
+    private void Heal(int value)
     {
         hp += value;
+        if (hp > maxHp)
+            hp = maxHp;
     }
 
-    public void Eat(int value)
+    private void Eat(int value)
     {
         hunger += value;
+        if (hunger > maxHunger)
+            hunger = maxHunger;
     }
 
-    public void Drink(int value)
+    private void Drink(int value)
     {
         water += value;
+        if (water > maxWater)
+            water = maxWater;
     }
 
     public void Use()
@@ -240,16 +259,19 @@ public class Player : MonoBehaviour
             case ItemType.Food:
                 Instantiate(hgUp, tooltipsPos);
                 Eat(Mathf.RoundToInt(item.data));
+                AudioPlayer.Instance.PlaySfx(SFX.Eat);
                 inventory.RemoveItem(item, 1);
                 break;
             case ItemType.Water:
                 Instantiate(wtUp, tooltipsPos);
                 Drink(Mathf.RoundToInt(item.data));
+                AudioPlayer.Instance.PlaySfx(SFX.Drink);
                 inventory.RemoveItem(item, 1);
                 break;
             case ItemType.Health:
                 Instantiate(hpUp, tooltipsPos);
                 Heal(Mathf.RoundToInt(item.data));
+                AudioPlayer.Instance.PlaySfx(SFX.Heal);
                 inventory.RemoveItem(item, 1);
                 break;
             case ItemType.Equip:

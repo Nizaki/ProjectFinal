@@ -27,6 +27,7 @@ public class GameTime : MonoBehaviour
     {
         onTimeChange ??= new UnityEvent<TimeState>();
         totalTimeLength = dayLength + nightLength;
+        StartCoroutine(nameof(Sunrise));
     }
 
     private void FixedUpdate()
@@ -37,31 +38,23 @@ public class GameTime : MonoBehaviour
             time += add;
             totalTime += add;
         }
-        if (time < dayLength && state == TimeState.Night)
+        if (time > totalTimeLength  && state == TimeState.Night)
         {
-            //doSomeTing
             StartCoroutine(nameof(Sunrise));
-            Debug.Log("Day Time");
-            state = TimeState.Day;
         }
         else if (time > dayLength && state == TimeState.Day)
         {
-            state = TimeState.Night;
             StartCoroutine(nameof(Sunset));
-            Debug.Log("Night Time");
-            //doSomeThing
-        }
-
-        if (time > dayLength + nightLength)
-        {
-            time = 0;
         }
     }
 
 
     private IEnumerator Sunrise()
     {
+        time = 0;
         day += 1;
+        state = TimeState.Day;
+        onTimeChange.Invoke(state);
         for (float i = 0; i < fadeDuration; i += Time.deltaTime)
         {
             light2D.intensity = Mathf.Lerp(0, 1, i / fadeDuration);
@@ -70,11 +63,12 @@ public class GameTime : MonoBehaviour
 
         light2D.intensity = 1;
         AudioPlayer.Instance.PlayDay();
-        onTimeChange.Invoke(TimeState.Day);
     }
 
     private IEnumerator Sunset()
     {
+        state = TimeState.Night;
+        onTimeChange.Invoke(TimeState.Night);
         for (float i = 0; i < fadeDuration; i += Time.deltaTime)
         {
             light2D.intensity = Mathf.Lerp(1, 0.1f, i / fadeDuration);
@@ -82,7 +76,7 @@ public class GameTime : MonoBehaviour
         }
 
         light2D.intensity = 0.1f;
-        onTimeChange.Invoke(TimeState.Night);
+        AudioPlayer.Instance.StopBGM();
     }
 
     public void StopTime()

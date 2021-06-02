@@ -18,5 +18,5 @@ MonoBehaviour:
     remainTime: 0
   Output:
     Item: {fileID: 11400000, guid: dc1d3b6581d2a5f4e872fe2fc505a52b, type: 2}
-    count: 0
+    count: 1
     remainTime: 0
