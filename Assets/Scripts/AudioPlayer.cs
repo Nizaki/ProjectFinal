@@ -69,5 +69,5 @@ public class AudioPlayer : MonoBehaviour
 
 public enum SFX
 {
-    Eat = 1,Drink = 2,Heal = 3
+    Eat = 0,Drink = 1,Heal = 2
 }

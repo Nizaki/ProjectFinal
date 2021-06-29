@@ -11,7 +11,9 @@ public class Cheater : MonoBehaviour
     void Start()
     {
         player = GameObject.FindWithTag("Player").GetComponent<Player>();
+#if UNITY_EDITOR
         StartCoroutine(nameof(AddItem));
+#endif
     }
 
     IEnumerator AddItem()
